@@ -24,7 +24,7 @@ export default function SignupForm() {
       }
 
       // POST to ConvertKit endpoint
-      const response = await fetch('https://app.kit.com/forms/8914101/subscriptions', {
+      await fetch('https://app.kit.com/forms/8914101/subscriptions', {
         method: 'POST',
         body: formData,
         mode: 'no-cors', // ConvertKit may not return CORS headers
