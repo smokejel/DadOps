@@ -11,6 +11,16 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: '#2563EB',  // Primary Blue
+          dark: '#1E40AF',     // Dark Blue
+          light: '#3B82F6',    // Light Blue
+        },
+        success: '#10B981',    // Success Green
+        warning: '#FB923C',    // Warning Orange
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
     },
   },
