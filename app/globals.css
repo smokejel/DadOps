@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-display;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 100,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+/* Toast Animation */
+@keyframes slide-down {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 0.5in;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Force light mode for printing */
+  * {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  /* Preserve important colored elements */
+  .bg-primary, .text-primary, .border-primary {
+    background-color: #21c45d !important;
+    color: white !important;
+  }
+
+  /* Expand content to full width */
+  .max-w-5xl {
+    max-width: 100% !important;
+  }
+
+  /* Prevent page breaks inside important elements */
+  .rounded-xl, .border {
+    page-break-inside: avoid;
+  }
+}
