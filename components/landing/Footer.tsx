@@ -19,7 +19,7 @@ export default function Footer() {
             <a href="#" className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
               Terms of Service
             </a>
-            <a href="#" className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+            <a href="mailto:admin@dadops.one" className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
               Contact
             </a>
           </nav>
