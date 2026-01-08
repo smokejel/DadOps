@@ -21,6 +21,7 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
+      allow_promotion_codes: true,
       mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_URL}/results?token=${token}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL}/results?token=${token}&preview=true`,
