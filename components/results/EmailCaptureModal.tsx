@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { formatCurrency, formatDueDate } from '@/lib/calculations';
+import { trackPaymentCompleted } from '@/lib/analytics';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -25,6 +26,14 @@ export default function EmailCaptureModal({
   const [formState, setFormState] = useState<FormState>('idle');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
+
+  // Track payment completion when component mounts
+  useEffect(() => {
+    trackPaymentCompleted({
+      session_id: sessionId,
+      amount: 19, // Fixed price for DadOps MVP
+    });
+  }, [sessionId]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

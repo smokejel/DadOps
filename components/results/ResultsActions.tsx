@@ -1,15 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import { trackResultsPrinted, trackResultsShared, trackCalculatorRestarted } from '@/lib/analytics'
 
 export default function ResultsActions() {
   const [shareTooltip, setShareTooltip] = useState(false)
 
   const handlePrint = () => {
+    trackResultsPrinted()
     window.print()
   }
 
   const handleShare = async () => {
+    trackResultsShared()
     try {
       await navigator.clipboard.writeText(window.location.href)
       setShareTooltip(true)
@@ -17,6 +20,11 @@ export default function ResultsActions() {
     } catch (error) {
       console.error('Failed to copy link:', error)
     }
+  }
+
+  const handleStartOver = () => {
+    trackCalculatorRestarted()
+    window.location.href = '/'
   }
 
   return (
@@ -45,13 +53,13 @@ export default function ResultsActions() {
       </button>
 
       {/* Start Over Button */}
-      <a
-        href="/"
+      <button
+        onClick={handleStartOver}
         className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm"
       >
         <span className="material-symbols-outlined text-xl">refresh</span>
         <span>Start Over</span>
-      </a>
+      </button>
     </div>
   )
 }

@@ -18,20 +18,20 @@ export default function LockedModuleCard({
   return (
     <div
       onClick={onClick}
-      className="relative bg-white dark:bg-surface-dark rounded-xl border-2 border-gray-200 dark:border-gray-700 p-6 cursor-pointer hover:border-gray-300 dark:hover:border-gray-600 transition-all hover:shadow-lg overflow-hidden"
+      className="relative bg-white dark:bg-surface-dark rounded-xl border-2 border-gray-200 dark:border-gray-700 p-6 cursor-pointer hover:border-green-300 dark:hover:border-green-700 transition-all hover:shadow-lg hover:scale-[1.02] overflow-hidden"
     >
-      {/* Soon Badge */}
+      {/* Coming Q2 Badge */}
       {comingSoon && (
         <div className="absolute top-4 right-4">
-          <span className="inline-block bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-            Soon
+          <span className="inline-block bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-xs font-bold px-3 py-1 rounded-full border border-green-200 dark:border-green-800 uppercase tracking-wide">
+            Coming Q2
           </span>
         </div>
       )}
 
-      {/* Icon */}
-      <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
-        <span className="material-symbols-outlined text-gray-500 dark:text-gray-400 text-3xl">
+      {/* Icon with green background */}
+      <div className="flex items-center justify-center w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
+        <span className="material-symbols-outlined text-green-600 dark:text-green-400 text-3xl">
           {icon}
         </span>
       </div>

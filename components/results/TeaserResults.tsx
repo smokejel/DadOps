@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { FullResults, formatCurrency, formatDueDate } from '@/lib/calculations'
+import { trackPaymentInitiated } from '@/lib/analytics'
 import WarningBanner from './WarningBanner'
 import WinnerCard from './WinnerCard'
 import ComparisonTable from './ComparisonTable'
@@ -16,6 +17,10 @@ export default function TeaserResults({ results, token }: TeaserResultsProps) {
 
   const handleUnlock = async () => {
     setLoading(true)
+
+    // Track payment initiated
+    trackPaymentInitiated()
+
     try {
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',

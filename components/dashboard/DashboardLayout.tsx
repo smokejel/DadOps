@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { FullResults, formatDueDate } from '@/lib/calculations'
+import { trackLockedModuleClick } from '@/lib/analytics'
 import FinancialAnalysisModule from './FinancialAnalysisModule'
 import LockedModuleCard from './LockedModuleCard'
 import ResultsActions from '../results/ResultsActions'
@@ -14,7 +15,11 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ results }: DashboardLayoutProps) {
   const [toast, setToast] = useState<{ message: string; type: 'info' } | null>(null)
 
-  const handleLockedModuleClick = (moduleName: string) => {
+  const handleLockedModuleClick = (moduleName: 'Deployment Timeline' | 'Logistics & Gear' | 'Readiness Score') => {
+    // Track the click event
+    trackLockedModuleClick(moduleName)
+
+    // Show toast notification
     setToast({
       message: `${moduleName} is coming in Q2 2026! Stay tuned for this exciting feature.`,
       type: 'info',

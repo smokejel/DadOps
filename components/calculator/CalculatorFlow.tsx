@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { encodeCalculatorData } from '@/lib/encoding'
+import { trackCalculatorStarted, trackCalculatorCompleted } from '@/lib/analytics'
 import DueDateStep from './DueDateStep'
 import PlanComparisonStep from './PlanComparisonStep'
 
@@ -28,6 +29,9 @@ export default function CalculatorFlow() {
   const handleDueDateContinue = (data: DueDateData) => {
     setDueDateData(data)
     setCurrentStep(2)
+
+    // Track calculator started (user progressed to plan input step)
+    trackCalculatorStarted()
   }
 
   const handlePlanComparisonBack = () => {
@@ -36,6 +40,13 @@ export default function CalculatorFlow() {
 
   const handlePlanComparisonContinue = (plans: Plan[]) => {
     setPlansData(plans)
+
+    // Track calculator completed
+    trackCalculatorCompleted({
+      due_month: parseInt(dueDateData.month),
+      due_year: parseInt(dueDateData.year),
+      num_plans: plans.length,
+    })
 
     // Encode data and navigate to results page
     try {
