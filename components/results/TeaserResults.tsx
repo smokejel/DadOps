@@ -145,7 +145,7 @@ export default function TeaserResults({ results, token }: TeaserResultsProps) {
                       $19
                     </span>
                     <span className="text-2xl text-gray-400 line-through">
-                      $99
+                      $29
                     </span>
                   </div>
                   <span className="inline-block bg-primary/10 dark:bg-primary/20 text-primary text-sm font-semibold px-3 py-1 rounded-full">
