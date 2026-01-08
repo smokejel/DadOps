@@ -97,11 +97,14 @@ export default function PlanInputCard({
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="text"
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="1"
               value={monthlyPremium}
               onChange={(e) => onMonthlyPremiumChange(formatCurrency(e.target.value))}
               placeholder="0"
-              className="w-full h-12 pl-8 pr-12 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className="w-full h-12 pl-8 pr-12 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">/mo</span>
           </div>
@@ -121,11 +124,14 @@ export default function PlanInputCard({
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="text"
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="1"
               value={familyDeductible}
               onChange={(e) => onFamilyDeductibleChange(formatCurrency(e.target.value))}
               placeholder="0"
-              className="w-full h-12 pl-8 pr-4 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className="w-full h-12 pl-8 pr-4 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>
         </label>
@@ -144,11 +150,14 @@ export default function PlanInputCard({
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="text"
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="1"
               value={familyOopMax}
               onChange={(e) => onFamilyOopMaxChange(formatCurrency(e.target.value))}
               placeholder="0"
-              className="w-full h-12 pl-8 pr-4 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className="w-full h-12 pl-8 pr-4 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>
         </label>
@@ -167,11 +176,14 @@ export default function PlanInputCard({
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="text"
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="1"
               value={employerHsa}
               onChange={(e) => onEmployerHsaChange(formatCurrency(e.target.value))}
               placeholder="0"
-              className="w-full h-12 pl-8 pr-4 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              className="w-full h-12 pl-8 pr-4 rounded-lg border border-[#dce5df] dark:border-gray-600 bg-white dark:bg-gray-800 text-[#121714] dark:text-white text-base focus:border-primary focus:ring-1 focus:ring-primary transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>
         </label>
