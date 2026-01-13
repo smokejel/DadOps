@@ -7,6 +7,7 @@ import FinancialAnalysisModule from './FinancialAnalysisModule'
 import LockedModuleCard from './LockedModuleCard'
 import ResultsActions from '../results/ResultsActions'
 import Toast from './Toast'
+import BetaTesterSignup from './BetaTesterSignup'
 
 interface DashboardLayoutProps {
   results: FullResults
@@ -55,6 +56,11 @@ export default function DashboardLayout({ results }: DashboardLayoutProps) {
         {/* Financial Analysis Module (Active) */}
         <div className="mb-8">
           <FinancialAnalysisModule results={results} />
+        </div>
+
+        {/* Beta Tester Signup */}
+        <div className="mb-8">
+          <BetaTesterSignup results={results} />
         </div>
 
         {/* Locked Modules Grid */}

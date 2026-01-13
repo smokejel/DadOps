@@ -16,7 +16,6 @@ export default function Home() {
       <WhyDadOps />
       <HowItWorks />
       <RealityCheck />
-      <Pricing />
       <FinalCTA />
       <CalculatorFlow />
       <Footer />

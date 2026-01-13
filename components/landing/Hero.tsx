@@ -28,7 +28,7 @@ export default function Hero() {
                 onClick={scrollToCalculator}
                 className="flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-green-600 hover:-translate-y-0.5"
               >
-                Start Calculating Free
+                Calculate My Birth Costs
               </button>
               <button
                 onClick={scrollToCalculator}

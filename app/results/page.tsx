@@ -75,15 +75,17 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
   // Run calculations
   const results = calculateAllPlans(data)
 
-  // Check payment status
-  let isPaid = false
-  if (session_id) {
+  // Check payment status (bypass if flag enabled)
+  const bypassPaywall = process.env.NEXT_PUBLIC_BYPASS_PAYWALL === 'true'
+  let isPaid = bypassPaywall // Start with bypass flag value
+  if (!bypassPaywall && session_id) {
+    // Only verify Stripe if paywall is NOT bypassed
     isPaid = await verifyStripeSession(session_id)
   }
 
   // Three rendering paths: teaser, email capture modal, or full results
-  if (isPaid && !email_captured) {
-    // User just paid but hasn't captured email yet
+  if (isPaid && !email_captured && !bypassPaywall) {
+    // User just paid but hasn't captured email yet (skip if bypassing)
     // session_id is guaranteed to exist because isPaid is only true when session_id exists
     return (
       <EmailCaptureModal
@@ -95,8 +97,8 @@ export default async function ResultsPage({ searchParams }: ResultsPageProps) {
         dueYear={results.dueYear}
       />
     )
-  } else if (isPaid && email_captured === 'true') {
-    // User paid AND captured email → Show full results
+  } else if (isPaid) {
+    // Paid (or bypassed) → Show full results
     return <FullResults results={results} />
   } else {
     // Not paid → Show teaser
