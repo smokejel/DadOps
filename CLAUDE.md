@@ -51,7 +51,10 @@ Winner is determined by lowest `effectiveCost` across all plans (2-3 plans suppo
 **Results Page (`app/results/page.tsx`):**
 - Handles both teaser (`preview=true`) and full results (with `session_id`)
 - Server-side payment verification via Stripe API
-- Renders `<TeaserResults>` or `<FullResults>` based on payment status
+- **Paywall bypass:** When `NEXT_PUBLIC_BYPASS_PAYWALL=true`, shows full results immediately (for MVP validation)
+- Renders `<TeaserResults>` or `<FullResults>` based on payment status (or bypass flag)
+- **Email capture:** After payment, shows ConvertKit email capture modal before full results
+- **Beta tester signup:** `<BetaTesterSignup>` component appears on full results dashboard
 
 ### Teaser vs Full Results
 
@@ -61,52 +64,68 @@ Winner is determined by lowest `effectiveCost` across all plans (2-3 plans suppo
 - Warning badges if double deductible triggered
 - Blurred comparison table/math/breakdown (visible but unreadable)
 
-**Full Results (Paid) - Complete Access:**
+**Full Results (Paid/Bypassed) - Complete Access:**
 - All comparison tables with full numbers
 - Detailed cost breakdown per plan
 - Mathematical formula explanation
+- **Beta tester signup form** for AI PDF parser feature (ConvertKit Form 8914101)
+- Locked module previews (Deployment Timeline, Logistics & Gear, Readiness Score)
 - Print/share/export functionality
 
-## File Structure (To Be Created)
+## File Structure
 
 ```
 app/
 ├── page.tsx                          # Landing + Calculator (single page)
-├── results/page.tsx                  # Teaser OR Full Results
+├── results/page.tsx                  # Teaser OR Full Results (with paywall bypass logic)
 ├── api/
-│   ├── create-checkout-session/route.ts  # Stripe checkout creation
-│   └── verify-session/route.ts           # Payment verification
-├── layout.tsx
-└── globals.css
+│   └── create-checkout-session/route.ts  # Stripe checkout creation
+├── layout.tsx                        # Root layout with Vercel Analytics
+└── globals.css                       # Global styles + Tailwind
 
 components/
-├── Calculator/
-│   ├── DueDateStep.tsx              # Month/year dropdowns
-│   ├── PlanInputCard.tsx            # Individual plan input (2-3 instances)
-│   └── CalculatorForm.tsx           # Parent form component
-├── Results/
+├── landing/                          # 8 landing page components
+├── calculator/                       # 4 calculator flow components
+├── results/
 │   ├── TeaserResults.tsx            # Blurred preview with unlock CTA
-│   ├── FullResults.tsx              # Complete unlocked view
-│   ├── WinnerCard.tsx               # Recommended plan card
-│   ├── ComparisonTable.tsx          # Side-by-side plan table
-│   ├── WarningBanner.tsx            # Double deductible alerts
-│   └── CalculationExplainer.tsx     # "The Math" section
+│   ├── FullResults.tsx              # Complete unlocked view (renders DashboardLayout)
+│   ├── EmailCaptureModal.tsx        # ConvertKit email capture after payment
+│   └── ResultsActions.tsx           # Print/Share/Start Over buttons
+├── dashboard/
+│   ├── DashboardLayout.tsx          # Main dashboard container
+│   ├── FinancialAnalysisModule.tsx  # Winner card + comparison table
+│   ├── BetaTesterSignup.tsx         # Beta tester signup form (NEW)
+│   ├── LockedModuleCard.tsx         # Preview cards for future features
+│   └── Toast.tsx                    # Toast notification component
 └── ui/                              # Reusable components (Button, Input, etc.)
 
 lib/
 ├── calculations.ts                  # Core calculation engine
 ├── encoding.ts                      # URL encode/decode for data persistence
 ├── stripe.ts                        # Stripe helper functions
+├── analytics.ts                     # Vercel Analytics event tracking
 └── constants.ts                     # Shared constants
 ```
 
 ## Environment Variables Required
 
 ```bash
+# Stripe Configuration
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_PRICE_ID=price_...           # $19 one-time product
+
+# Application URL
 NEXT_PUBLIC_URL=https://dadops.one
+
+# ConvertKit Configuration
+CONVERTKIT_FORM_ID=8914101          # Form ID for email capture and beta signups
+CONVERTKIT_API_V4_KEY=kit_...       # API key for ConvertKit v4
+CONVERTKIT_API_V3_KEY=...           # API key for ConvertKit v3
+CONVERTKIT_API_SECRET=...           # API secret for ConvertKit
+
+# Development Controls
+NEXT_PUBLIC_BYPASS_PAYWALL=true    # Set to 'true' to bypass paywall for MVP validation (development only)
 ```
 
 ## Development Commands
@@ -146,6 +165,57 @@ Based on mockups in `/mockups/`:
 - Winner cards get green highlight treatment
 - Blurred content in teaser uses CSS `filter: blur()` with overlay
 
+## Development Features
+
+### Paywall Bypass (MVP Validation)
+
+The paywall can be temporarily bypassed for MVP validation using an environment variable:
+
+**Configuration:**
+- Set `NEXT_PUBLIC_BYPASS_PAYWALL=true` in `.env.local`
+- Restart dev server: `npm run dev`
+
+**Behavior:**
+- Users skip directly to full results dashboard
+- No Stripe payment required
+- Email capture modal skipped
+- All payment code remains intact and functional
+
+**Re-enabling Paywall:**
+- Change to `NEXT_PUBLIC_BYPASS_PAYWALL=false` (or remove the variable)
+- Restart dev server
+- Normal paywall flow resumes
+
+**Implementation:**
+- `app/results/page.tsx:78-104` - Decision logic checks bypass flag
+- If bypassed: `isPaid = true`, skips email capture, shows `<FullResults>`
+- All Stripe integration code preserved for future re-enablement
+
+### Beta Tester Signup Form
+
+A ConvertKit subscription form appears on the full results dashboard to collect beta testers for the AI PDF parser feature.
+
+**Location:**
+- `components/dashboard/DashboardLayout.tsx` - Between financial results and "More Tools Coming Soon"
+- Component: `components/dashboard/BetaTesterSignup.tsx`
+
+**Features:**
+- Email (required) and first name (optional) inputs
+- Submits to ConvertKit Form 8914101
+- Enriches submission with calculator data (due date, savings, winning plan)
+- Tags submission with `interested_feature: "AI PDF Parser"` and `signup_source: "Results Page"`
+- Three states: idle (form), submitting (loading), success (confirmation), error (retry)
+- Non-blocking - stays on page after submission (no redirect)
+- Dark mode support
+
+**ConvertKit Custom Fields:**
+- `first_name` - User input
+- `due_date` - From calculator
+- `savings_amount` - From calculator
+- `winning_plan` - From calculator
+- `interested_feature` - Set to "AI PDF Parser"
+- `signup_source` - Set to "Results Page"
+
 ## Critical Implementation Notes
 
 1. **URL Token Encoding:**
@@ -178,19 +248,24 @@ Based on mockups in `/mockups/`:
 
 **In Scope:**
 - Landing page with calculator form (same page, anchor scroll)
-- Teaser results with blurred paywall
-- Stripe Checkout integration ($19 one-time)
-- Full results after payment verification
+- Teaser results with blurred paywall *(currently bypassed for MVP validation)*
+- Stripe Checkout integration ($19 one-time) *(code intact, ready to re-enable)*
+- Full results after payment verification (or bypass)
+- Email capture via ConvertKit *(skipped when paywall bypassed)*
+- Beta tester signup for AI PDF parser feature
+- Dashboard with locked module previews
 - URL-based data persistence (cross-device)
 - Print results functionality
 - Mobile responsive design
+- Dark mode support
+- Vercel Analytics integration
 
 **Out of Scope (v2+):**
 - User accounts/authentication
 - Database storage
 - PDF export (only print supported)
 - Email delivery of results
-- Analytics beyond Stripe dashboard
+- Advanced analytics dashboard
 
 ## Testing Scenarios
 

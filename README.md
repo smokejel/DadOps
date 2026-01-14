@@ -18,12 +18,14 @@ DadOps is a financial planning tool that compares insurance plans to help expect
 
 ### Teaser-to-Paywall Model
 - **Free teaser results** showing savings and recommended plan
-- **$19 one-time unlock** for detailed breakdown and comparison
+- **$19 one-time unlock** for detailed breakdown and comparison *(currently bypassed for MVP validation)*
 - **Stripe Checkout integration** with secure payment processing
 - **Email capture** via ConvertKit for customer nurturing
+- **Development bypass flag** to skip paywall temporarily (`NEXT_PUBLIC_BYPASS_PAYWALL`)
 
 ### Dashboard Experience
 - **Professional results dashboard** with dashboard-style layout
+- **Beta tester signup** for AI PDF parser feature (ConvertKit integration)
 - **Locked module previews** for future features (Deployment Timeline, Logistics & Gear, Readiness Score)
 - **Print & share functionality** for results
 - **Dark mode support** throughout the entire experience
@@ -76,13 +78,20 @@ DadOps is a financial planning tool that compares insurance plans to help expect
    ```bash
    # Stripe Keys (get from stripe.com/dashboard)
    STRIPE_SECRET_KEY=sk_test_...
-   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
-
-   # Stripe Product (create a $19 one-time product in Stripe)
-   STRIPE_PRICE_ID=price_...
+   STRIPE_PUBLISHABLE_KEY=pk_test_...
+   STRIPE_PRICE_ID=price_...           # $19 one-time product
 
    # Application URL
    NEXT_PUBLIC_URL=http://localhost:3000
+
+   # ConvertKit (for email capture and beta signups)
+   CONVERTKIT_FORM_ID=8914101
+   CONVERTKIT_API_V4_KEY=kit_...
+   CONVERTKIT_API_V3_KEY=...
+   CONVERTKIT_API_SECRET=...
+
+   # Development Controls (optional)
+   NEXT_PUBLIC_BYPASS_PAYWALL=true    # Skip paywall for MVP validation
    ```
 
 4. **Run the development server**
@@ -111,8 +120,8 @@ dadops/
 ├── components/
 │   ├── landing/               # 8 landing page components
 │   ├── calculator/            # 4 calculator flow components
-│   ├── results/               # 7 results components
-│   └── dashboard/             # 4 dashboard components
+│   ├── results/               # 4 results components
+│   └── dashboard/             # 5 dashboard components (includes BetaTesterSignup)
 ├── lib/
 │   ├── calculations.ts        # Core calculation engine
 │   ├── encoding.ts            # URL token encode/decode
@@ -199,9 +208,14 @@ Vercel Analytics tracks the following events:
 ### Environment Variables (Vercel)
 Add these in Vercel Dashboard → Settings → Environment Variables:
 - `STRIPE_SECRET_KEY`
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_PUBLISHABLE_KEY`
 - `STRIPE_PRICE_ID`
 - `NEXT_PUBLIC_URL` (set to `https://dadops.one`)
+- `CONVERTKIT_FORM_ID`
+- `CONVERTKIT_API_V4_KEY`
+- `CONVERTKIT_API_V3_KEY`
+- `CONVERTKIT_API_SECRET`
+- `NEXT_PUBLIC_BYPASS_PAYWALL` (set to `false` or omit entirely for production)
 
 ### Custom Domain
 1. Add custom domain in Vercel dashboard
@@ -229,6 +243,23 @@ Add these in Vercel Dashboard → Settings → Environment Variables:
 5. Submit email
 6. Verify full results dashboard displays
 
+**Test paywall bypass:**
+1. Set `NEXT_PUBLIC_BYPASS_PAYWALL=true` in `.env.local`
+2. Restart dev server
+3. Complete calculator and submit
+4. Verify you see full results immediately (no teaser, no payment)
+5. Set `NEXT_PUBLIC_BYPASS_PAYWALL=false` and restart
+6. Verify paywall returns (teaser page appears)
+
+**Test beta tester signup:**
+1. Navigate to full results dashboard
+2. Scroll to beta tester signup form (before "More Tools Coming Soon")
+3. Enter email and optional first name
+4. Click "Join Waitlist"
+5. Verify success message appears
+6. Check ConvertKit dashboard for new subscriber
+7. Verify custom fields populated correctly
+
 **Test locked modules:**
 1. Navigate to full results dashboard
 2. Click each locked module card
@@ -250,6 +281,48 @@ Add these in Vercel Dashboard → Settings → Environment Variables:
 - **HTTPS enforced:** All traffic encrypted
 - **Privacy-first analytics:** Vercel Analytics uses no cookies
 - **Email consent:** Users explicitly opt-in to email list
+
+---
+
+## 🛠️ Development Features
+
+### Paywall Bypass (MVP Validation)
+
+Temporarily bypass the paywall to show full results immediately:
+
+**Enable bypass:**
+1. Set `NEXT_PUBLIC_BYPASS_PAYWALL=true` in `.env.local`
+2. Restart dev server: `npm run dev`
+3. Users now see full results without payment
+
+**Disable bypass (restore paywall):**
+1. Set `NEXT_PUBLIC_BYPASS_PAYWALL=false` in `.env.local` (or remove the variable)
+2. Restart dev server
+3. Normal paywall flow resumes
+
+**Notes:**
+- All Stripe code remains intact and functional
+- Payment integration ready to re-enable instantly
+- Use for MVP validation and testing
+- **Never enable in production**
+
+### Beta Tester Signup
+
+A ConvertKit form on the results dashboard collects beta testers for the AI PDF parser feature:
+
+**Location:** Between financial results and "More Tools Coming Soon" section
+
+**Features:**
+- Email (required) and first name (optional) inputs
+- Submits to ConvertKit Form 8914101
+- Enriches submissions with calculator data (due date, savings, winning plan)
+- Tags with `interested_feature: "AI PDF Parser"` and `signup_source: "Results Page"`
+- Non-blocking - stays on page after submission
+- Success/error states with retry functionality
+
+**Custom Fields (ConvertKit):**
+- `first_name`, `due_date`, `savings_amount`, `winning_plan`
+- `interested_feature`, `signup_source`
 
 ---
 
@@ -294,8 +367,10 @@ npm run lint         # Run ESLint
 
 ### Current Features (MVP - Pass 2)
 - ✅ Birth cost calculator with 2-3 plan comparison
-- ✅ Teaser-to-paywall model with Stripe integration
+- ✅ Teaser-to-paywall model with Stripe integration *(bypassed for validation)*
+- ✅ Paywall bypass flag for MVP validation
 - ✅ Email capture via ConvertKit
+- ✅ Beta tester signup for AI PDF parser
 - ✅ Professional results dashboard
 - ✅ Locked module previews
 - ✅ Vercel Analytics integration
