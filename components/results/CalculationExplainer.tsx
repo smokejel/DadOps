@@ -59,7 +59,7 @@ export default function CalculationExplainer({ results }: CalculationExplainerPr
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {winner.doubleDeductibleRisk
-              ? `Deductible (${formatCurrency(winner.plan.familyDeductible)}) + OOP Max (${formatCurrency(winner.plan.familyOopMax)}) due to double deductible scenario.`
+              ? `Your pregnancy spans two plan years, so you could hit your OOP max twice: ${formatCurrency(winner.plan.familyOopMax)} for prenatal care in year one, plus ${formatCurrency(winner.plan.familyOopMax)} for delivery and newborn care in year two.`
               : `Estimated out-of-pocket costs for prenatal visits, delivery, and postnatal care (up to your OOP maximum of ${formatCurrency(winner.plan.familyOopMax)}).`
             }
           </p>

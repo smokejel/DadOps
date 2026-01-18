@@ -60,7 +60,7 @@ export default function TeaserResults({ results, token }: TeaserResultsProps) {
             <WarningBanner
               type="double-deductible"
               title="Double Deductible Risk Detected"
-              message="Your pregnancy spans two calendar years, which means you may hit deductibles in both years. We've factored this into our calculations."
+              message="Your pregnancy spans two plan years (prenatal care in one year, delivery in the next), which means you could hit your out-of-pocket maximum twice. We've factored this into our calculations."
             />
           </div>
         )}

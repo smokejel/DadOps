@@ -29,8 +29,9 @@ The core calculation assumes users will hit family out-of-pocket maximums during
 **Double Deductible Risk Detection:**
 - Pregnancy spans calendar years when `dueMonth <= 9` (conception in prior year)
 - Double deductible warning triggers when `dueMonth <= 3` (Jan-Mar births)
-- In double deductible scenarios: `expectedOop = familyDeductible + familyOopMax`
+- In double deductible scenarios: `expectedOop = familyOopMax * 2` (OOP max hit in BOTH plan years)
 - Standard scenarios: `expectedOop = familyOopMax`
+- Note: Deductibles count TOWARD the OOP max within a plan year, not on top of it
 
 **Total Cost Formula:**
 ```

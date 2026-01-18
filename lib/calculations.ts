@@ -43,9 +43,10 @@ export function calculatePlan(
   // Expected out-of-pocket costs
   let expectedOop: number
   if (doubleDeductibleRisk) {
-    // Year 1: Prenatal care hits family deductible
-    // Year 2: Birth + baby care hits family OOP max
-    expectedOop = plan.familyDeductible + plan.familyOopMax
+    // Pregnancy spans two plan years: prenatal care in year one, delivery in year two
+    // Deductibles count TOWARD the OOP max (not on top of it)
+    // Real risk: hitting OOP max in BOTH plan years
+    expectedOop = plan.familyOopMax * 2
   } else {
     // Standard scenario: All care in single calendar year
     // Assume hitting family OOP max (statistically likely for birth costs)
