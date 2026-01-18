@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import PlanInputCard from './PlanInputCard'
+import { CalculatorMode } from './DueDateStep'
 
 interface Plan {
   name: string
@@ -12,11 +13,12 @@ interface Plan {
 }
 
 interface PlanComparisonStepProps {
+  mode: CalculatorMode
   onBack: () => void
   onContinue: (plans: Plan[]) => void
 }
 
-export default function PlanComparisonStep({ onBack, onContinue }: PlanComparisonStepProps) {
+export default function PlanComparisonStep({ mode, onBack, onContinue }: PlanComparisonStepProps) {
   const [plan1, setPlan1] = useState<Plan>({
     name: '',
     monthlyPremium: '',
@@ -45,6 +47,13 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
 
   const isFormValid = () => {
     const plan1Valid = isPlanValid(plan1)
+
+    // Single mode only requires Plan 1
+    if (mode === 'single') {
+      return plan1Valid
+    }
+
+    // Compare mode requires Plan 1 and Plan 2
     const plan2Valid = isPlanValid(plan2)
     const plan3Valid = plan3 === null || isPlanValid(plan3)
     return plan1Valid && plan2Valid && plan3Valid
@@ -52,6 +61,13 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
 
   const handleContinue = () => {
     if (isFormValid()) {
+      // Single mode only sends one plan
+      if (mode === 'single') {
+        onContinue([plan1])
+        return
+      }
+
+      // Compare mode sends 2-3 plans
       const plans = plan3 ? [plan1, plan2, plan3] : [plan1, plan2]
       onContinue(plans)
     }
@@ -78,7 +94,7 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
           {/* Progress Indicator */}
           <div className="flex flex-col gap-2">
             <p className="text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide">
-              Step 2 of 3: Compare Plans
+              {mode === 'single' ? 'Step 2 of 3: Plan Details' : 'Step 2 of 3: Compare Plans'}
             </p>
             <div className="w-full h-2 bg-[#dce5df] dark:bg-gray-700 rounded-full overflow-hidden">
               <div className="h-full bg-primary rounded-full" style={{ width: '66%' }}></div>
@@ -88,10 +104,12 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
           {/* Heading */}
           <div className="flex flex-col gap-2">
             <h2 className="text-2xl md:text-3xl font-bold text-[#121714] dark:text-white">
-              Compare Your Plans
+              {mode === 'single' ? 'Enter Your Plan Details' : 'Compare Your Plans'}
             </h2>
             <p className="text-base text-gray-600 dark:text-gray-400">
-              Enter the details for up to 3 insurance plans to compare your estimated birth costs.
+              {mode === 'single'
+                ? 'Enter your insurance plan details to calculate your estimated birth costs.'
+                : 'Enter the details for up to 3 insurance plans to compare your estimated birth costs.'}
             </p>
           </div>
 
@@ -112,7 +130,7 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
           </div>
 
           {/* Plan Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className={`grid grid-cols-1 ${mode === 'compare' ? 'md:grid-cols-2' : ''} gap-6`}>
             {/* Plan 1 */}
             <PlanInputCard
               planNumber={1}
@@ -130,26 +148,28 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
               isDeletable={false}
             />
 
-            {/* Plan 2 */}
-            <PlanInputCard
-              planNumber={2}
-              planName={plan2.name}
-              monthlyPremium={plan2.monthlyPremium}
-              familyDeductible={plan2.familyDeductible}
-              familyOopMax={plan2.familyOopMax}
-              employerHsa={plan2.employerHsa}
-              onPlanNameChange={(value) => setPlan2({ ...plan2, name: value })}
-              onMonthlyPremiumChange={(value) => setPlan2({ ...plan2, monthlyPremium: value })}
-              onFamilyDeductibleChange={(value) => setPlan2({ ...plan2, familyDeductible: value })}
-              onFamilyOopMaxChange={(value) => setPlan2({ ...plan2, familyOopMax: value })}
-              onEmployerHsaChange={(value) => setPlan2({ ...plan2, employerHsa: value })}
-              isPrimary={false}
-              isDeletable={false}
-            />
+            {/* Plan 2 - Only shown in compare mode */}
+            {mode === 'compare' && (
+              <PlanInputCard
+                planNumber={2}
+                planName={plan2.name}
+                monthlyPremium={plan2.monthlyPremium}
+                familyDeductible={plan2.familyDeductible}
+                familyOopMax={plan2.familyOopMax}
+                employerHsa={plan2.employerHsa}
+                onPlanNameChange={(value) => setPlan2({ ...plan2, name: value })}
+                onMonthlyPremiumChange={(value) => setPlan2({ ...plan2, monthlyPremium: value })}
+                onFamilyDeductibleChange={(value) => setPlan2({ ...plan2, familyDeductible: value })}
+                onFamilyOopMaxChange={(value) => setPlan2({ ...plan2, familyOopMax: value })}
+                onEmployerHsaChange={(value) => setPlan2({ ...plan2, employerHsa: value })}
+                isPrimary={false}
+                isDeletable={false}
+              />
+            )}
           </div>
 
-          {/* Plan 3 (Conditional) */}
-          {plan3 !== null && (
+          {/* Plan 3 (Conditional) - Only in compare mode */}
+          {mode === 'compare' && plan3 !== null && (
             <div className="max-w-md">
               <PlanInputCard
                 planNumber={3}
@@ -170,8 +190,8 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
             </div>
           )}
 
-          {/* Add Third Plan Button */}
-          {plan3 === null && (
+          {/* Add Third Plan Button - Only in compare mode */}
+          {mode === 'compare' && plan3 === null && (
             <div>
               <button
                 onClick={handleAddThirdPlan}
@@ -197,7 +217,7 @@ export default function PlanComparisonStep({ onBack, onContinue }: PlanCompariso
               onClick={handleContinue}
               className="flex-1 flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-600 hover:enabled:-translate-y-0.5 transition-all"
             >
-              Calculate Costs
+              {mode === 'single' ? 'Calculate My Costs' : 'Calculate Costs'}
               <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>

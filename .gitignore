@@ -36,11 +36,11 @@ yarn-error.log*
 next-env.d.ts
 
 # IDE files
- .idea/
- .vscode/
- .claude/
+.idea/
+.vscode/
+.claude/
 
  # Planning/reference materials
- Staging_Area/
- mockups/
- docs/
+Staging_Area/
+mockups/
+docs/

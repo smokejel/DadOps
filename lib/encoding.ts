@@ -77,8 +77,8 @@ export function decodeCalculatorData(token: string): CalculatorData {
     const json = atob(base64)
     const data = JSON.parse(json) as CalculatorData
 
-    // Validate required fields
-    if (!data.dueMonth || !data.dueYear || !data.plans || data.plans.length < 2) {
+    // Validate required fields (supports single plan mode with 1+ plans)
+    if (!data.dueMonth || !data.dueYear || !data.plans || data.plans.length < 1) {
       throw new Error('Invalid calculator data structure')
     }
 

@@ -133,3 +133,29 @@ export function formatDueDate(month: number, year: number): string {
   }
   return `${monthName} ${year}`
 }
+
+/**
+ * Calculate the monthly savings target to be financially ready by due date
+ * @param totalLiability - Total expected birth year costs
+ * @param dueDate - Object with month (1-12) and year
+ * @param currentDate - Current date (defaults to now, injectable for testing)
+ * @returns Monthly savings amount needed (rounded up)
+ */
+export function calculateMonthlySavingsTarget(
+  totalLiability: number,
+  dueDate: { month: number; year: number },
+  currentDate: Date = new Date()
+): number {
+  // Target the 15th of the due month as a reasonable midpoint
+  const dueDateTime = new Date(dueDate.year, dueDate.month - 1, 15)
+
+  // Calculate months remaining (minimum 1 to avoid division by zero)
+  const monthsRemaining = Math.max(
+    1,
+    (dueDateTime.getFullYear() - currentDate.getFullYear()) * 12 +
+      (dueDateTime.getMonth() - currentDate.getMonth())
+  )
+
+  // Round up to ensure they save enough
+  return Math.ceil(totalLiability / monthsRemaining)
+}

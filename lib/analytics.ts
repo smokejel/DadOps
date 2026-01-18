@@ -11,6 +11,7 @@ export const AnalyticsEvents = {
   // Calculator flow
   CALCULATOR_STARTED: 'calculator_started',
   CALCULATOR_COMPLETED: 'calculator_completed',
+  MODE_SELECTED: 'mode_selected',
 
   // Payment flow
   PAYMENT_INITIATED: 'payment_initiated',
@@ -31,6 +32,10 @@ export interface CalculatorCompletedParams {
   due_month: number
   due_year: number
   num_plans: number
+}
+
+export interface ModeSelectedParams {
+  mode: 'compare' | 'single'
 }
 
 export interface PaymentCompletedParams {
@@ -57,6 +62,19 @@ export function trackLockedModuleClick(moduleName: LockedModuleClickParams['modu
 export function trackCalculatorStarted() {
   try {
     track(AnalyticsEvents.CALCULATOR_STARTED)
+  } catch (error) {
+    console.error('Analytics error:', error)
+  }
+}
+
+/**
+ * Track mode selected event (compare vs single plan)
+ */
+export function trackModeSelected(params: ModeSelectedParams) {
+  try {
+    track(AnalyticsEvents.MODE_SELECTED, {
+      mode: params.mode,
+    })
   } catch (error) {
     console.error('Analytics error:', error)
   }

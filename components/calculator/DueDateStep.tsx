@@ -2,13 +2,16 @@
 
 import { useState } from 'react'
 
+export type CalculatorMode = 'compare' | 'single'
+
 interface DueDateStepProps {
-  onContinue: (data: { month: string; year: string }) => void
+  onContinue: (data: { month: string; year: string; mode: CalculatorMode }) => void
 }
 
 export default function DueDateStep({ onContinue }: DueDateStepProps) {
   const [month, setMonth] = useState<string>('')
   const [year, setYear] = useState<string>('')
+  const [mode, setMode] = useState<CalculatorMode>('compare')
 
   const isFormValid = month !== '' && year !== ''
 
@@ -21,7 +24,7 @@ export default function DueDateStep({ onContinue }: DueDateStepProps) {
 
   const handleContinue = () => {
     if (isFormValid) {
-      onContinue({ month, year })
+      onContinue({ month, year, mode })
     }
   }
 
@@ -98,6 +101,66 @@ export default function DueDateStep({ onContinue }: DueDateStepProps) {
               </label>
             </div>
 
+            {/* Mode Selection */}
+            <div className="flex flex-col gap-3">
+              <span className="text-[#121714] dark:text-gray-200 text-sm font-medium">
+                What would you like to do?
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* Compare Plans Option */}
+                <label
+                  className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                    mode === 'compare'
+                      ? 'border-primary bg-primary/5 dark:bg-primary/10'
+                      : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-500'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="calculatorMode"
+                    value="compare"
+                    checked={mode === 'compare'}
+                    onChange={() => setMode('compare')}
+                    className="w-5 h-5 text-primary border-gray-300 focus:ring-primary"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold text-[#121714] dark:text-white">
+                      I'm comparing plans
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      Find the best option for your family
+                    </span>
+                  </div>
+                </label>
+
+                {/* Single Plan Option */}
+                <label
+                  className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                    mode === 'single'
+                      ? 'border-primary bg-primary/5 dark:bg-primary/10'
+                      : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-500'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="calculatorMode"
+                    value="single"
+                    checked={mode === 'single'}
+                    onChange={() => setMode('single')}
+                    className="w-5 h-5 text-primary border-gray-300 focus:ring-primary"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold text-[#121714] dark:text-white">
+                      I know my plan
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      Calculate costs for my current coverage
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
             {/* Info Callout */}
             <div className="flex gap-4 p-4 rounded-lg bg-primary/10 dark:bg-primary/5 border border-primary/20">
               <span className="material-symbols-outlined text-primary text-2xl flex-shrink-0">
@@ -119,7 +182,7 @@ export default function DueDateStep({ onContinue }: DueDateStepProps) {
               onClick={handleContinue}
               className="flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-base font-bold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-600 hover:enabled:-translate-y-0.5 transition-all"
             >
-              Continue to Plans
+              {mode === 'compare' ? 'Continue to Plans' : 'Enter Plan Details'}
               <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>

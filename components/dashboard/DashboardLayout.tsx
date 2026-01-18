@@ -1,8 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { FullResults, formatDueDate } from '@/lib/calculations'
+import { FullResults, formatDueDate, calculateMonthlySavingsTarget } from '@/lib/calculations'
 import { trackLockedModuleClick } from '@/lib/analytics'
+import CountdownHeader from './CountdownHeader'
+import FinancialStatsRow from './FinancialStatsRow'
+import KeyDatesTimeline from './KeyDatesTimeline'
+import CostBreakdownCard from './CostBreakdownCard'
 import FinancialAnalysisModule from './FinancialAnalysisModule'
 import LockedModuleCard from './LockedModuleCard'
 import ResultsActions from '../results/ResultsActions'
@@ -15,6 +19,23 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ results }: DashboardLayoutProps) {
   const [toast, setToast] = useState<{ message: string; type: 'info' } | null>(null)
+
+  // Determine if single plan mode (no comparison needed)
+  const singlePlanMode = results.results.length === 1
+
+  // Calculate monthly savings target
+  const monthlySavings = calculateMonthlySavingsTarget(
+    results.winner.effectiveCost,
+    { month: results.dueMonth, year: results.dueYear }
+  )
+
+  // Calculate months remaining
+  const now = new Date()
+  const dueDate = new Date(results.dueYear, results.dueMonth - 1, 15)
+  const monthsRemaining = Math.max(1,
+    (dueDate.getFullYear() - now.getFullYear()) * 12 +
+    (dueDate.getMonth() - now.getMonth())
+  )
 
   const handleLockedModuleClick = (moduleName: 'Deployment Timeline' | 'Logistics & Gear' | 'Readiness Score') => {
     // Track the click event
@@ -42,29 +63,52 @@ export default function DashboardLayout({ results }: DashboardLayoutProps) {
         />
       )}
 
-      <div className="max-w-7xl mx-auto px-4 md:px-10">
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            Your DadOps Dashboard
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Based on a due date of {formatDueDate(results.dueMonth, results.dueYear)}
-          </p>
+      <div className="max-w-7xl mx-auto px-4 md:px-10 flex flex-col gap-6">
+        {/* Row 1: Mission Clock Hero */}
+        <CountdownHeader
+          dueMonth={results.dueMonth}
+          dueYear={results.dueYear}
+        />
+
+        {/* Row 2: Financial Stats (3 cards) */}
+        <FinancialStatsRow
+          totalLiability={results.winner.effectiveCost}
+          monthlySavingsGoal={monthlySavings}
+          monthsRemaining={monthsRemaining}
+          dueMonth={results.dueMonth}
+          dueYear={results.dueYear}
+          planName={singlePlanMode ? results.winner.plan.name : undefined}
+        />
+
+        {/* Row 3: Two-panel layout (Key Dates + Cost Breakdown) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <KeyDatesTimeline
+            dueMonth={results.dueMonth}
+            dueYear={results.dueYear}
+            hasDoubleDeductible={results.doubleDeductibleRisk}
+            className="lg:col-span-2"
+          />
+          <CostBreakdownCard
+            plan={results.winner.plan}
+            result={results.winner}
+            className="lg:col-span-1"
+          />
         </div>
 
-        {/* Financial Analysis Module (Active) */}
-        <div className="mb-8">
-          <FinancialAnalysisModule results={results} />
-        </div>
+        {/* Row 4: Plan Comparison (compare mode only) */}
+        {!singlePlanMode && (
+          <div>
+            <FinancialAnalysisModule results={results} />
+          </div>
+        )}
 
-        {/* Beta Tester Signup */}
-        <div className="mb-8">
+        {/* Row 5: Beta Tester Signup */}
+        <div>
           <BetaTesterSignup results={results} />
         </div>
 
-        {/* Locked Modules Grid */}
-        <div className="mb-8">
+        {/* Row 6: Locked Modules Grid */}
+        <div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             More Tools Coming Soon
           </h2>
@@ -96,12 +140,12 @@ export default function DashboardLayout({ results }: DashboardLayoutProps) {
         </div>
 
         {/* Bottom Actions */}
-        <div className="mt-12 py-8 border-t border-gray-200 dark:border-gray-700">
+        <div className="mt-6 py-8 border-t border-gray-200 dark:border-gray-700">
           <ResultsActions />
         </div>
 
         {/* Footer Note */}
-        <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
           <p>
             Questions about your results?{' '}
             <a href="/#calculator" className="text-primary hover:underline">
