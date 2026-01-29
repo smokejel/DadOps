@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { BudgetCategory, BudgetItem } from '@/lib/types'
 import { CATEGORY_COLOR_CLASSES } from '@/lib/defaultBudget'
 import { formatCurrency } from '@/lib/dashboardUtils'
+import { getIntegerError, hasValidationErrors } from '@/lib/validation'
 import LineItemRow from './LineItemRow'
 
 interface CategoryCardProps {
@@ -25,6 +26,7 @@ export default function CategoryCard({
   const [showAddForm, setShowAddForm] = useState(false)
   const [newItemName, setNewItemName] = useState('')
   const [newItemEstimated, setNewItemEstimated] = useState('')
+  const [newItemEstimatedError, setNewItemEstimatedError] = useState<string | null>(null)
 
   const colorClasses = CATEGORY_COLOR_CLASSES[category.color] || CATEGORY_COLOR_CLASSES.blue
 
@@ -35,7 +37,7 @@ export default function CategoryCard({
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!newItemName.trim()) return
+    if (!newItemName.trim() || newItemEstimatedError) return
 
     onAddItem({
       name: newItemName.trim(),
@@ -46,6 +48,7 @@ export default function CategoryCard({
 
     setNewItemName('')
     setNewItemEstimated('')
+    setNewItemEstimatedError(null)
     setShowAddForm(false)
   }
 
@@ -126,42 +129,54 @@ export default function CategoryCard({
           {/* Add Item */}
           <div className="p-4 border-t border-gray-800">
             {showAddForm ? (
-              <form onSubmit={handleAddItem} className="flex items-center gap-3">
-                <input
-                  type="text"
-                  value={newItemName}
-                  onChange={(e) => setNewItemName(e.target.value)}
-                  placeholder="Item name"
-                  className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
-                  autoFocus
-                />
-                <div className="flex items-center gap-1">
-                  <span className="text-gray-400">$</span>
+              <form onSubmit={handleAddItem} className="space-y-2">
+                <div className="flex items-center gap-3">
                   <input
-                    type="number"
-                    value={newItemEstimated}
-                    onChange={(e) => setNewItemEstimated(e.target.value)}
-                    placeholder="0"
-                    className="w-24 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                    type="text"
+                    value={newItemName}
+                    onChange={(e) => setNewItemName(e.target.value)}
+                    placeholder="Item name"
+                    className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                    autoFocus
                   />
+                  <div className="flex items-center gap-1">
+                    <span className="text-gray-400">$</span>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={newItemEstimated}
+                      onChange={(e) => {
+                        const value = e.target.value
+                        setNewItemEstimated(value)
+                        setNewItemEstimatedError(getIntegerError(value))
+                      }}
+                      placeholder="0"
+                      className={`w-24 bg-gray-800 border rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:outline-none ${
+                        newItemEstimatedError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                      }`}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={hasValidationErrors(newItemEstimatedError)}
+                    className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowAddForm(false)
+                      setNewItemName('')
+                      setNewItemEstimated('')
+                      setNewItemEstimatedError(null)
+                    }}
+                    className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    Cancel
+                  </button>
                 </div>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
-                >
-                  Add
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowAddForm(false)
-                    setNewItemName('')
-                    setNewItemEstimated('')
-                  }}
-                  className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
-                >
-                  Cancel
-                </button>
+                {newItemEstimatedError && <p className="text-red-400 text-xs">{newItemEstimatedError}</p>}
               </form>
             ) : (
               <button

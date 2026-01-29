@@ -14,11 +14,11 @@ export default function StatsCards({ costs, totalBudget }: StatsCardsProps) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {/* Target Liability */}
+      {/* Total Budget */}
       <div className="bg-card-dark rounded-xl p-5 border border-gray-800">
         <div className="flex items-center gap-2 mb-3">
           <span className="material-symbols-outlined text-blue-400">target</span>
-          <span className="text-gray-400 text-sm">Target Liability</span>
+          <span className="text-gray-400 text-sm">Total Budget</span>
         </div>
         <p className="text-2xl font-bold text-white">
           {formatCurrency(totalBudget)}

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useDashboardState } from '@/hooks/useDashboardState'
 import { formatDueDate, formatCurrency } from '@/lib/dashboardUtils'
 import { NUMBER_TO_MONTH, MONTH_NAMES } from '@/lib/constants'
+import { getIntegerError, hasValidationErrors } from '@/lib/validation'
 
 export default function SettingsPage() {
   const router = useRouter()
@@ -24,6 +25,13 @@ export default function SettingsPage() {
   const [familyDeductible, setFamilyDeductible] = useState(userData?.insurance.familyDeductible.toString() || '')
   const [familyOopMax, setFamilyOopMax] = useState(userData?.insurance.familyOopMax.toString() || '')
   const [employerHsa, setEmployerHsa] = useState(userData?.insurance.employerHsa.toString() || '')
+
+  // Validation errors
+  const [dayError, setDayError] = useState<string | null>(null)
+  const [premiumError, setPremiumError] = useState<string | null>(null)
+  const [deductibleError, setDeductibleError] = useState<string | null>(null)
+  const [oopMaxError, setOopMaxError] = useState<string | null>(null)
+  const [hsaError, setHsaError] = useState<string | null>(null)
 
   if (!userData) return null
 
@@ -106,13 +114,19 @@ export default function SettingsPage() {
               <div>
                 <label className="block text-sm text-gray-400 mb-2">Day</label>
                 <input
-                  type="number"
-                  min={1}
-                  max={31}
+                  type="text"
+                  inputMode="numeric"
                   value={dueDateDay}
-                  onChange={(e) => setDueDateDay(parseInt(e.target.value) || 1)}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary"
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setDueDateDay(parseInt(value) || 1)
+                    setDayError(getIntegerError(value))
+                  }}
+                  className={`w-full bg-gray-800 border rounded-lg px-4 py-2 text-white focus:outline-none ${
+                    dayError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                  }`}
                 />
+                {dayError && <p className="text-red-400 text-xs mt-1">{dayError}</p>}
               </div>
               <div>
                 <label className="block text-sm text-gray-400 mb-2">Year</label>
@@ -129,14 +143,18 @@ export default function SettingsPage() {
             </div>
             <div className="flex gap-3">
               <button
-                onClick={() => setEditingDueDate(false)}
+                onClick={() => {
+                  setEditingDueDate(false)
+                  setDayError(null)
+                }}
                 className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveDueDate}
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+                disabled={hasValidationErrors(dayError)}
+                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary"
               >
                 Save
               </button>
@@ -181,60 +199,99 @@ export default function SettingsPage() {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={monthlyPremium}
-                    onChange={(e) => setMonthlyPremium(e.target.value)}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none focus:border-primary"
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setMonthlyPremium(value)
+                      setPremiumError(getIntegerError(value))
+                    }}
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none ${
+                      premiumError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {premiumError && <p className="text-red-400 text-xs mt-1">{premiumError}</p>}
               </div>
               <div>
                 <label className="block text-sm text-gray-400 mb-2">Family Deductible</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={familyDeductible}
-                    onChange={(e) => setFamilyDeductible(e.target.value)}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none focus:border-primary"
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setFamilyDeductible(value)
+                      setDeductibleError(getIntegerError(value))
+                    }}
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none ${
+                      deductibleError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {deductibleError && <p className="text-red-400 text-xs mt-1">{deductibleError}</p>}
               </div>
               <div>
                 <label className="block text-sm text-gray-400 mb-2">Family OOP Max</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={familyOopMax}
-                    onChange={(e) => setFamilyOopMax(e.target.value)}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none focus:border-primary"
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setFamilyOopMax(value)
+                      setOopMaxError(getIntegerError(value))
+                    }}
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none ${
+                      oopMaxError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {oopMaxError && <p className="text-red-400 text-xs mt-1">{oopMaxError}</p>}
               </div>
               <div>
                 <label className="block text-sm text-gray-400 mb-2">Employer HSA/HRA</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={employerHsa}
-                    onChange={(e) => setEmployerHsa(e.target.value)}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none focus:border-primary"
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setEmployerHsa(value)
+                      setHsaError(getIntegerError(value))
+                    }}
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-2 text-white focus:outline-none ${
+                      hsaError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {hsaError && <p className="text-red-400 text-xs mt-1">{hsaError}</p>}
               </div>
             </div>
             <div className="flex gap-3">
               <button
-                onClick={() => setEditingInsurance(false)}
+                onClick={() => {
+                  setEditingInsurance(false)
+                  setPremiumError(null)
+                  setDeductibleError(null)
+                  setOopMaxError(null)
+                  setHsaError(null)
+                }}
                 className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveInsurance}
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+                disabled={hasValidationErrors(premiumError, deductibleError, oopMaxError, hsaError)}
+                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary"
               >
                 Save
               </button>

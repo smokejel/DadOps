@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useDashboardState } from '@/hooks/useDashboardState'
 import { UserData } from '@/lib/types'
 import { MONTH_NAMES } from '@/lib/constants'
+import { getIntegerError, hasValidationErrors } from '@/lib/validation'
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -22,6 +23,12 @@ export default function OnboardingPage() {
   const [familyDeductible, setFamilyDeductible] = useState('')
   const [familyOopMax, setFamilyOopMax] = useState('')
   const [employerHsa, setEmployerHsa] = useState('')
+
+  // Validation errors
+  const [premiumError, setPremiumError] = useState<string | null>(null)
+  const [deductibleError, setDeductibleError] = useState<string | null>(null)
+  const [oopMaxError, setOopMaxError] = useState<string | null>(null)
+  const [hsaError, setHsaError] = useState<string | null>(null)
 
   // Redirect if already onboarded (must be in useEffect to avoid setState-in-render error)
   useEffect(() => {
@@ -188,14 +195,22 @@ export default function OnboardingPage() {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={monthlyPremium}
-                    onChange={(e) => setMonthlyPremium(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setMonthlyPremium(value)
+                      setPremiumError(getIntegerError(value))
+                    }}
                     placeholder="0"
                     required
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
+                      premiumError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {premiumError && <p className="text-red-400 text-xs mt-1">{premiumError}</p>}
               </div>
 
               <div>
@@ -203,14 +218,22 @@ export default function OnboardingPage() {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={familyDeductible}
-                    onChange={(e) => setFamilyDeductible(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setFamilyDeductible(value)
+                      setDeductibleError(getIntegerError(value))
+                    }}
                     placeholder="0"
                     required
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
+                      deductibleError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {deductibleError && <p className="text-red-400 text-xs mt-1">{deductibleError}</p>}
               </div>
 
               <div>
@@ -218,14 +241,22 @@ export default function OnboardingPage() {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={familyOopMax}
-                    onChange={(e) => setFamilyOopMax(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setFamilyOopMax(value)
+                      setOopMaxError(getIntegerError(value))
+                    }}
                     placeholder="0"
                     required
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
+                      oopMaxError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {oopMaxError && <p className="text-red-400 text-xs mt-1">{oopMaxError}</p>}
               </div>
 
               <div>
@@ -233,13 +264,21 @@ export default function OnboardingPage() {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     value={employerHsa}
-                    onChange={(e) => setEmployerHsa(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setEmployerHsa(value)
+                      setHsaError(getIntegerError(value))
+                    }}
                     placeholder="0"
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
+                      hsaError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                    }`}
                   />
                 </div>
+                {hsaError && <p className="text-red-400 text-xs mt-1">{hsaError}</p>}
                 <p className="text-xs text-gray-500 mt-1">Annual contribution from your employer to offset costs</p>
               </div>
             </div>
@@ -254,7 +293,8 @@ export default function OnboardingPage() {
               </button>
               <button
                 type="submit"
-                className="flex-1 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
+                disabled={hasValidationErrors(premiumError, deductibleError, oopMaxError, hsaError)}
+                className="flex-1 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary"
               >
                 <span className="material-symbols-outlined text-lg">rocket_launch</span>
                 Launch Mission Control

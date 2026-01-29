@@ -1,29 +1,17 @@
-'use client'
+import { Header, Hero, HowItWorks, RealityCheck, CostEstimator, CTASection, Footer } from '@/components/landing'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useDashboardState } from '@/hooks/useDashboardState'
-
-export default function HomePage() {
-  const router = useRouter()
-  const { isLoaded, isOnboarded } = useDashboardState()
-
-  useEffect(() => {
-    if (isLoaded) {
-      if (isOnboarded) {
-        router.push('/dashboard')
-      } else {
-        router.push('/onboarding')
-      }
-    }
-  }, [isLoaded, isOnboarded, router])
-
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background-dark flex items-center justify-center">
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        <span className="text-gray-400">Initializing mission control...</span>
-      </div>
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-100 antialiased selection:bg-emerald-500 selection:text-white">
+      <Header />
+      <main className="flex-1">
+        <Hero />
+        <HowItWorks />
+        <RealityCheck />
+        <CostEstimator />
+        <CTASection />
+      </main>
+      <Footer />
     </div>
   )
 }

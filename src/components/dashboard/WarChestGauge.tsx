@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { CalculatedCosts } from '@/lib/types'
 import { formatCurrency } from '@/lib/dashboardUtils'
+import { getIntegerError } from '@/lib/validation'
 
 interface WarChestGaugeProps {
   costs: CalculatedCosts
@@ -13,6 +14,7 @@ interface WarChestGaugeProps {
 export default function WarChestGauge({ costs, cashOnHand, onUpdateCash }: WarChestGaugeProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [inputValue, setInputValue] = useState(cashOnHand.toString())
+  const [inputError, setInputError] = useState<string | null>(null)
 
   useEffect(() => {
     setInputValue(cashOnHand.toString())
@@ -23,9 +25,11 @@ export default function WarChestGauge({ costs, cashOnHand, onUpdateCash }: WarCh
   const progressPercent = Math.min(100, Math.max(0, (cashOnHand / costs.effectiveCost) * 100))
 
   const handleSubmit = () => {
+    if (inputError) return
     const value = parseFloat(inputValue) || 0
     onUpdateCash(value)
     setIsEditing(false)
+    setInputError(null)
   }
 
   return (
@@ -46,31 +50,43 @@ export default function WarChestGauge({ costs, cashOnHand, onUpdateCash }: WarCh
         <div className="flex justify-between items-center">
           <span className="text-gray-400">Cash on Hand</span>
           {isEditing ? (
-            <div className="flex items-center gap-2">
-              <span className="text-gray-400">$</span>
-              <input
-                type="number"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-                className="w-24 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-white text-right focus:outline-none focus:border-primary"
-                autoFocus
-              />
-              <button
-                onClick={handleSubmit}
-                className="text-primary hover:text-primary-dark"
-              >
-                <span className="material-symbols-outlined text-lg">check</span>
-              </button>
-              <button
-                onClick={() => {
-                  setIsEditing(false)
-                  setInputValue(cashOnHand.toString())
-                }}
-                className="text-gray-400 hover:text-gray-300"
-              >
-                <span className="material-symbols-outlined text-lg">close</span>
-              </button>
+            <div className="flex flex-col items-end gap-1">
+              <div className="flex items-center gap-2">
+                <span className="text-gray-400">$</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={inputValue}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setInputValue(value)
+                    setInputError(getIntegerError(value))
+                  }}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+                  className={`w-24 bg-gray-700 border rounded px-2 py-1 text-white text-right focus:outline-none ${
+                    inputError ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-primary'
+                  }`}
+                  autoFocus
+                />
+                <button
+                  onClick={handleSubmit}
+                  disabled={!!inputError}
+                  className="text-primary hover:text-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span className="material-symbols-outlined text-lg">check</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setIsEditing(false)
+                    setInputValue(cashOnHand.toString())
+                    setInputError(null)
+                  }}
+                  className="text-gray-400 hover:text-gray-300"
+                >
+                  <span className="material-symbols-outlined text-lg">close</span>
+                </button>
+              </div>
+              {inputError && <p className="text-red-400 text-xs">{inputError}</p>}
             </div>
           ) : (
             <button

@@ -1,17 +1,15 @@
 'use client'
 
 import { BudgetCategory } from '@/lib/types'
-import { formatCurrency } from '@/lib/dashboardUtils'
+import { formatCurrency, calculateTotalBudget } from '@/lib/dashboardUtils'
 
 interface SummaryCardsProps {
   budget: BudgetCategory[]
 }
 
 export default function SummaryCards({ budget }: SummaryCardsProps) {
-  // Calculate totals
-  const totalEstimated = budget.reduce((sum, cat) =>
-    sum + cat.items.reduce((itemSum, item) => itemSum + item.estimated, 0), 0
-  )
+  // Calculate totals using shared utility for consistency with dashboard
+  const totalEstimated = calculateTotalBudget(budget)
 
   const totalActual = budget.reduce((sum, cat) =>
     sum + cat.items.reduce((itemSum, item) => itemSum + (item.actual ?? 0), 0), 0

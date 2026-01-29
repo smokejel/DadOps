@@ -1,6 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import { InsurancePlan } from '@/lib/types'
+import { getIntegerError } from '@/lib/validation'
 
 interface PlanFormProps {
   plan: InsurancePlan
@@ -10,8 +12,26 @@ interface PlanFormProps {
 }
 
 export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFormProps) {
+  const [premiumError, setPremiumError] = useState<string | null>(null)
+  const [deductibleError, setDeductibleError] = useState<string | null>(null)
+  const [oopMaxError, setOopMaxError] = useState<string | null>(null)
+  const [hsaError, setHsaError] = useState<string | null>(null)
+
   const updateField = (field: keyof InsurancePlan, value: string | number) => {
     onChange({ ...plan, [field]: value })
+  }
+
+  const handleNumericChange = (
+    field: 'monthlyPremium' | 'familyDeductible' | 'familyOopMax' | 'employerHsa',
+    value: string,
+    setError: (error: string | null) => void
+  ) => {
+    const error = getIntegerError(value)
+    setError(error)
+    // Only update if valid or empty
+    if (!error || value === '') {
+      updateField(field, parseInt(value) || 0)
+    }
   }
 
   return (
@@ -48,13 +68,17 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               value={plan.monthlyPremium || ''}
-              onChange={(e) => updateField('monthlyPremium', parseFloat(e.target.value) || 0)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+              onChange={(e) => handleNumericChange('monthlyPremium', e.target.value, setPremiumError)}
+              className={`w-full bg-gray-800 border rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none ${
+                premiumError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+              }`}
               placeholder="0"
             />
           </div>
+          {premiumError && <p className="text-red-400 text-xs mt-1">{premiumError}</p>}
         </div>
 
         <div>
@@ -62,13 +86,17 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               value={plan.familyDeductible || ''}
-              onChange={(e) => updateField('familyDeductible', parseFloat(e.target.value) || 0)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+              onChange={(e) => handleNumericChange('familyDeductible', e.target.value, setDeductibleError)}
+              className={`w-full bg-gray-800 border rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none ${
+                deductibleError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+              }`}
               placeholder="0"
             />
           </div>
+          {deductibleError && <p className="text-red-400 text-xs mt-1">{deductibleError}</p>}
         </div>
 
         <div>
@@ -76,13 +104,17 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               value={plan.familyOopMax || ''}
-              onChange={(e) => updateField('familyOopMax', parseFloat(e.target.value) || 0)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+              onChange={(e) => handleNumericChange('familyOopMax', e.target.value, setOopMaxError)}
+              className={`w-full bg-gray-800 border rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none ${
+                oopMaxError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+              }`}
               placeholder="0"
             />
           </div>
+          {oopMaxError && <p className="text-red-400 text-xs mt-1">{oopMaxError}</p>}
         </div>
 
         <div>
@@ -90,13 +122,17 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               value={plan.employerHsa || ''}
-              onChange={(e) => updateField('employerHsa', parseFloat(e.target.value) || 0)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+              onChange={(e) => handleNumericChange('employerHsa', e.target.value, setHsaError)}
+              className={`w-full bg-gray-800 border rounded-lg px-3 py-2.5 pl-7 text-white placeholder-gray-500 focus:outline-none ${
+                hsaError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+              }`}
               placeholder="0"
             />
           </div>
+          {hsaError && <p className="text-red-400 text-xs mt-1">{hsaError}</p>}
         </div>
       </div>
     </div>

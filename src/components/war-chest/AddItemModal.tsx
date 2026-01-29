@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { BudgetCategory, BudgetItem } from '@/lib/types'
+import { getIntegerError, hasValidationErrors } from '@/lib/validation'
 
 interface AddItemModalProps {
   isOpen: boolean
@@ -19,12 +20,13 @@ export default function AddItemModal({
   const [categoryId, setCategoryId] = useState(categories[0]?.id || '')
   const [name, setName] = useState('')
   const [estimated, setEstimated] = useState('')
+  const [estimatedError, setEstimatedError] = useState<string | null>(null)
 
   if (!isOpen) return null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!name.trim() || !categoryId) return
+    if (!name.trim() || !categoryId || estimatedError) return
 
     onAdd(categoryId, {
       name: name.trim(),
@@ -35,6 +37,7 @@ export default function AddItemModal({
 
     setName('')
     setEstimated('')
+    setEstimatedError(null)
     setCategoryId(categories[0]?.id || '')
     onClose()
   }
@@ -85,14 +88,22 @@ export default function AddItemModal({
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={estimated}
-                onChange={(e) => setEstimated(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value
+                  setEstimated(value)
+                  setEstimatedError(getIntegerError(value))
+                }}
                 placeholder="0"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg pl-8 pr-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-primary"
+                className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-2 text-white placeholder-gray-500 focus:outline-none ${
+                  estimatedError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+                }`}
                 required
               />
             </div>
+            {estimatedError && <p className="text-red-400 text-xs mt-1">{estimatedError}</p>}
           </div>
 
           {/* Buttons */}
@@ -106,7 +117,8 @@ export default function AddItemModal({
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              disabled={hasValidationErrors(estimatedError)}
+              className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary"
             >
               Add Item
             </button>

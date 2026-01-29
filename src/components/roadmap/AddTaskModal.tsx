@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { TaskCategory, Task } from '@/lib/types'
+import { getIntegerError, hasValidationErrors } from '@/lib/validation'
 
 interface AddTaskModalProps {
   isOpen: boolean
@@ -23,30 +24,33 @@ export default function AddTaskModal({ isOpen, onClose, onAdd }: AddTaskModalPro
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState<TaskCategory>('Preparation')
-  const [weekDue, setWeekDue] = useState(20)
+  const [weekDue, setWeekDue] = useState('20')
+  const [weekDueError, setWeekDueError] = useState<string | null>(null)
 
   if (!isOpen) return null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!title.trim()) return
+    if (!title.trim() || weekDueError) return
 
+    const weekDueNum = parseInt(weekDue) || 1
     // Determine trimester from weekDue
-    const trimester: 1 | 2 | 3 = weekDue <= 12 ? 1 : weekDue <= 26 ? 2 : 3
+    const trimester: 1 | 2 | 3 = weekDueNum <= 12 ? 1 : weekDueNum <= 26 ? 2 : 3
 
     onAdd({
       title: title.trim(),
       description: description.trim(),
       category,
       trimester,
-      weekDue,
+      weekDue: weekDueNum,
     })
 
     // Reset form
     setTitle('')
     setDescription('')
     setCategory('Preparation')
-    setWeekDue(20)
+    setWeekDue('20')
+    setWeekDueError(null)
     onClose()
   }
 
@@ -106,13 +110,19 @@ export default function AddTaskModal({ isOpen, onClose, onAdd }: AddTaskModalPro
           <div>
             <label className="block text-sm text-gray-400 mb-2">Week Due (1-40)</label>
             <input
-              type="number"
-              min={1}
-              max={40}
+              type="text"
+              inputMode="numeric"
               value={weekDue}
-              onChange={(e) => setWeekDue(parseInt(e.target.value) || 1)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary"
+              onChange={(e) => {
+                const value = e.target.value
+                setWeekDue(value)
+                setWeekDueError(getIntegerError(value))
+              }}
+              className={`w-full bg-gray-800 border rounded-lg px-4 py-2 text-white focus:outline-none ${
+                weekDueError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
+              }`}
             />
+            {weekDueError && <p className="text-red-400 text-xs mt-1">{weekDueError}</p>}
           </div>
 
           {/* Buttons */}
@@ -126,7 +136,8 @@ export default function AddTaskModal({ isOpen, onClose, onAdd }: AddTaskModalPro
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              disabled={hasValidationErrors(weekDueError)}
+              className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary"
             >
               Add Task
             </button>
