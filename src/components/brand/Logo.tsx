@@ -26,7 +26,7 @@ function IconMinimal({ size }: { size: number }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <circle cx="60" cy="60" r="60" fill="#FF5500" />
+      <circle cx="60" cy="60" r="60" fill="#FF742E" />
       <circle cx="60" cy="60" r="50" fill="#111827" />
       <path
         d="M38 35 L38 85 L58 85 C75 85 85 73 85 60 C85 47 75 35 58 35 L38 35 Z M48 45 L56 45 C67 45 74 51 74 60 C74 69 67 75 56 75 L48 75 L48 45 Z"
