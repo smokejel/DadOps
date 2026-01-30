@@ -19,13 +19,14 @@ DadOps Dashboard MVP - A Next.js 14 (App Router) "Mission Control" dashboard for
 ## Design System
 
 Colors (Tailwind classes):
-- Primary: `emerald-500` (#10B981)
+- Primary: `primary` (#FF5500)
+- Primary Dark: `primary-dark` (#FF3700)
 - Background: `gray-900` (#111827)
 - Card: `gray-800` (#1F2937)
 - Border: `gray-700`
 
 Category colors for tasks/budget:
-- Medical: `blue-500`
+- Medical: `medical` (#1A24FF)
 - Finance: `green-500`
 - Gear: `purple-500`
 - Home/Nursery: `teal-500`

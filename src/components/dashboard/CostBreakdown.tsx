@@ -13,8 +13,8 @@ export default function CostBreakdown({ costs, userData }: CostBreakdownProps) {
     {
       label: 'Max Out-of-Pocket',
       icon: 'medical_services',
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
+      color: 'text-medical',
+      bgColor: 'bg-medical/10',
       value: costs.expectedOop,
     },
     {

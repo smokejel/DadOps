@@ -2,8 +2,8 @@
 
 @theme inline {
   /* Primary brand color */
-  --color-primary: #10b77f;
-  --color-primary-dark: #0d9668;
+  --color-primary: #FF5500;
+  --color-primary-dark: #FF3700;
 
   /* Background colors */
   --color-background-dark: #111827;
@@ -18,6 +18,9 @@
   --color-dad-green: #22c55e;
   --color-dad-gray: #6b7280;
   --color-dad-pink: #ec4899;
+
+  /* Medical category color (custom blue) */
+  --color-medical: #1A24FF;
 
   /* Font family */
   --font-sans: var(--font-inter);
@@ -44,20 +47,20 @@ input[type=range]::-webkit-slider-thumb {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: #10B981;
+  background: #FF5500;
   cursor: pointer;
   margin-top: -8px;
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.2);
 }
 
 input[type=range]::-moz-range-thumb {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: #10B981;
+  background: #FF5500;
   cursor: pointer;
   border: none;
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.2);
 }
 
 input[type=range]::-webkit-slider-runnable-track {

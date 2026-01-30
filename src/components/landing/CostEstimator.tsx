@@ -31,7 +31,7 @@ export default function CostEstimator() {
   return (
     <section id="cost-estimator" className="py-24 relative overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-5 gap-12 rounded-3xl bg-gray-800/40 border border-gray-800 backdrop-blur-sm p-8 lg:p-12 shadow-2xl">
@@ -48,7 +48,7 @@ export default function CostEstimator() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <label className="text-white font-medium">Insurance Deductible</label>
-                <span className="text-emerald-500 font-mono font-bold">
+                <span className="text-primary font-mono font-bold">
                   {formatCurrency(deductible)}
                 </span>
               </div>
@@ -71,7 +71,7 @@ export default function CostEstimator() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <label className="text-white font-medium">Out-of-Pocket Max</label>
-                <span className="text-emerald-500 font-mono font-bold">
+                <span className="text-primary font-mono font-bold">
                   {formatCurrency(oopMax)}
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function CostEstimator() {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <label className="text-white font-medium">Baby Gear Budget</label>
-                <span className="text-emerald-500 font-mono font-bold">
+                <span className="text-primary font-mono font-bold">
                   {formatCurrency(gearBudget)}
                 </span>
               </div>

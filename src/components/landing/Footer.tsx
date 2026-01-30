@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Logo } from '@/components/brand'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -7,10 +8,7 @@ export default function Footer() {
     <footer className="bg-gray-900 border-t border-gray-800 py-12">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-emerald-500">radar</span>
-          <span className="text-lg font-bold text-white">DadOps</span>
-        </div>
+        <Logo variant="full" size="sm" />
 
         {/* Links */}
         <div className="flex gap-8 text-sm text-gray-400">

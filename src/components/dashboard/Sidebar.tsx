@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Logo } from '@/components/brand'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
@@ -18,15 +19,7 @@ export default function Sidebar() {
     <aside className="hidden md:flex md:flex-col md:w-64 bg-gray-900 border-r border-gray-800">
       {/* Logo */}
       <div className="p-6 border-b border-gray-800">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-            <span className="material-symbols-outlined text-primary">rocket_launch</span>
-          </div>
-          <div>
-            <h1 className="text-lg font-bold text-white">DadOps</h1>
-            <p className="text-xs text-gray-400">Mission Control</p>
-          </div>
-        </div>
+        <Logo variant="full" size="md" showTagline />
       </div>
 
       {/* Navigation */}

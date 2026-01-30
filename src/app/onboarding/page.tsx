@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation'
 import { useDashboardState } from '@/hooks/useDashboardState'
 import { UserData } from '@/lib/types'
 import { MONTH_NAMES } from '@/lib/constants'
-import { getIntegerError, hasValidationErrors } from '@/lib/validation'
+import { hasValidationErrors } from '@/lib/validation'
+import { Logo } from '@/components/brand'
+import { CurrencyInput, LoadingSpinner } from '@/components/ui'
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -39,11 +41,7 @@ export default function OnboardingPage() {
 
   // Show loading spinner while checking onboarding status or redirecting
   if (!isLoaded || isOnboarded) {
-    return (
-      <div className="min-h-screen bg-background-dark flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
+    return <LoadingSpinner />
   }
 
   const handleStep1Submit = (e: React.FormEvent) => {
@@ -94,14 +92,8 @@ export default function OnboardingPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary text-2xl">rocket_launch</span>
-            </div>
-            <div className="text-left">
-              <h1 className="text-2xl font-bold text-white">DadOps</h1>
-              <p className="text-gray-400 text-sm">Mission Control</p>
-            </div>
+          <div className="inline-flex mb-4">
+            <Logo variant="full" size="lg" showTagline />
           </div>
           <p className="text-gray-400">
             {step === 1 ? "Let's start with your due date" : "Now, tell us about your insurance"}
@@ -190,97 +182,41 @@ export default function OnboardingPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">Monthly Premium *</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={monthlyPremium}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      setMonthlyPremium(value)
-                      setPremiumError(getIntegerError(value))
-                    }}
-                    placeholder="0"
-                    required
-                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
-                      premiumError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
-                    }`}
-                  />
-                </div>
-                {premiumError && <p className="text-red-400 text-xs mt-1">{premiumError}</p>}
-              </div>
+              <CurrencyInput
+                label="Monthly Premium"
+                value={monthlyPremium}
+                onChange={setMonthlyPremium}
+                error={premiumError}
+                onErrorChange={setPremiumError}
+                required
+              />
 
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">Family Deductible *</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={familyDeductible}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      setFamilyDeductible(value)
-                      setDeductibleError(getIntegerError(value))
-                    }}
-                    placeholder="0"
-                    required
-                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
-                      deductibleError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
-                    }`}
-                  />
-                </div>
-                {deductibleError && <p className="text-red-400 text-xs mt-1">{deductibleError}</p>}
-              </div>
+              <CurrencyInput
+                label="Family Deductible"
+                value={familyDeductible}
+                onChange={setFamilyDeductible}
+                error={deductibleError}
+                onErrorChange={setDeductibleError}
+                required
+              />
 
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">Family Out-of-Pocket Max *</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={familyOopMax}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      setFamilyOopMax(value)
-                      setOopMaxError(getIntegerError(value))
-                    }}
-                    placeholder="0"
-                    required
-                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
-                      oopMaxError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
-                    }`}
-                  />
-                </div>
-                {oopMaxError && <p className="text-red-400 text-xs mt-1">{oopMaxError}</p>}
-              </div>
+              <CurrencyInput
+                label="Family Out-of-Pocket Max"
+                value={familyOopMax}
+                onChange={setFamilyOopMax}
+                error={oopMaxError}
+                onErrorChange={setOopMaxError}
+                required
+              />
 
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">Employer HSA/HRA Contribution (optional)</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={employerHsa}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      setEmployerHsa(value)
-                      setHsaError(getIntegerError(value))
-                    }}
-                    placeholder="0"
-                    className={`w-full bg-gray-800 border rounded-lg pl-8 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none ${
-                      hsaError ? 'border-red-500 focus:border-red-500' : 'border-gray-700 focus:border-primary'
-                    }`}
-                  />
-                </div>
-                {hsaError && <p className="text-red-400 text-xs mt-1">{hsaError}</p>}
-                <p className="text-xs text-gray-500 mt-1">Annual contribution from your employer to offset costs</p>
-              </div>
+              <CurrencyInput
+                label="Employer HSA/HRA Contribution (optional)"
+                value={employerHsa}
+                onChange={setEmployerHsa}
+                error={hsaError}
+                onErrorChange={setHsaError}
+                helpText="Annual contribution from your employer to offset costs"
+              />
             </div>
 
             <div className="flex gap-3">

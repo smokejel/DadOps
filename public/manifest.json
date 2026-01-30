@@ -1,0 +1,16 @@
+{
+  "name": "DadOps | Mission Control",
+  "short_name": "DadOps",
+  "description": "Your command center for navigating the journey to fatherhood",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#FF5500",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -48,8 +48,8 @@ export default function CTASection() {
           </p>
 
           {formState === 'success' ? (
-            <div className="mt-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-8">
-              <div className="flex items-center justify-center gap-3 text-emerald-500 mb-3">
+            <div className="mt-8 rounded-xl bg-primary/10 border border-primary/20 p-8">
+              <div className="flex items-center justify-center gap-3 text-primary mb-3">
                 <span className="material-symbols-outlined text-3xl">check_circle</span>
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">You&apos;re on the list.</h3>
@@ -70,7 +70,7 @@ export default function CTASection() {
                   placeholder="First Name"
                   required
                   disabled={formState === 'submitting'}
-                  className="w-full rounded-lg border-0 bg-white/5 px-4 py-3 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm placeholder:text-gray-500 disabled:opacity-50"
+                  className="w-full rounded-lg border-0 bg-white/5 px-4 py-3 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm placeholder:text-gray-500 disabled:opacity-50"
                 />
               </div>
 
@@ -87,7 +87,7 @@ export default function CTASection() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={formState === 'submitting'}
-                  className="w-full rounded-lg border-0 bg-white/5 px-4 py-3 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm placeholder:text-gray-500 disabled:opacity-50"
+                  className="w-full rounded-lg border-0 bg-white/5 px-4 py-3 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm placeholder:text-gray-500 disabled:opacity-50"
                   placeholder="Email Address"
                 />
               </div>
@@ -102,7 +102,7 @@ export default function CTASection() {
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
                   disabled={formState === 'submitting'}
-                  className="w-full rounded-lg border-0 bg-white/5 px-4 py-3 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-emerald-500 sm:text-sm disabled:opacity-50"
+                  className="w-full rounded-lg border-0 bg-white/5 px-4 py-3 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm disabled:opacity-50"
                 >
                   <option value="" className="bg-gray-900">
                     When are you expecting?
@@ -128,7 +128,7 @@ export default function CTASection() {
               <button
                 type="submit"
                 disabled={formState === 'submitting'}
-                className="w-full rounded-lg bg-emerald-500 px-4 py-3 text-sm font-bold text-gray-900 shadow-sm hover:bg-emerald-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-bold text-gray-900 shadow-sm hover:bg-primary-dark hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {formState === 'submitting' ? (
                   <>
@@ -150,7 +150,7 @@ export default function CTASection() {
 
           <p className="mt-6 text-xs text-gray-500">
             We care about your data. Read our{' '}
-            <Link href="#" className="font-semibold text-emerald-500 hover:text-emerald-400">
+            <Link href="#" className="font-semibold text-primary hover:text-primary/80">
               privacy policy
             </Link>
             .

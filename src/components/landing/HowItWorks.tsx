@@ -38,10 +38,10 @@ export default function HowItWorks() {
           {steps.map((step) => (
             <div
               key={step.title}
-              className="group relative rounded-2xl border border-gray-800 bg-gray-800 p-8 hover:border-emerald-500/50 transition-colors"
+              className="group relative rounded-2xl border border-gray-800 bg-gray-800 p-8 hover:border-primary/50 transition-colors"
             >
               {/* Icon Badge */}
-              <div className="absolute -top-6 left-8 flex size-12 items-center justify-center rounded-xl bg-gray-900 border border-gray-700 shadow-lg text-emerald-500 group-hover:scale-110 transition-transform duration-300">
+              <div className="absolute -top-6 left-8 flex size-12 items-center justify-center rounded-xl bg-gray-900 border border-gray-700 shadow-lg text-primary group-hover:scale-110 transition-transform duration-300">
                 <span className="material-symbols-outlined">{step.icon}</span>
               </div>
 

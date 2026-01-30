@@ -2,11 +2,11 @@ import { Task, TaskCategory, CategoryStyle } from './types'
 
 export const CATEGORY_STYLES: Record<TaskCategory, CategoryStyle> = {
   Medical: {
-    bg: 'bg-blue-500/10',
-    text: 'text-blue-400',
+    bg: 'bg-medical/10',
+    text: 'text-medical',
     icon: 'medical_services',
-    border: 'border-blue-500/30',
-    progress: 'bg-blue-500',
+    border: 'border-medical/30',
+    progress: 'bg-medical',
   },
   Finance: {
     bg: 'bg-green-500/10',

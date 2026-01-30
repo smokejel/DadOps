@@ -39,7 +39,7 @@ export function useDashboardState() {
         name: 'Medical',
         description: 'Insurance, hospital bills, OOP costs',
         icon: 'medical_services',
-        color: 'blue',
+        color: 'medical',
         items: [
           { id: 'med-1', name: 'Annual Premiums', estimated: calculatedCosts.annualPremium, actual: null, purchased: false },
           { id: 'med-2', name: 'Out-of-Pocket Maximum', estimated: calculatedCosts.expectedOop, actual: null, purchased: false },

@@ -169,7 +169,7 @@ export default function SettingsPage() {
       <div className="bg-card-dark rounded-xl border border-gray-800 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-            <span className="material-symbols-outlined text-blue-400">medical_services</span>
+            <span className="material-symbols-outlined text-medical">medical_services</span>
             Insurance Details
           </h2>
           {!editingInsurance && (

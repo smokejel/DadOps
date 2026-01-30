@@ -7,7 +7,7 @@ export const DEFAULT_BUDGET_CATEGORIES: BudgetCategory[] = [
     name: 'Medical',
     description: 'Insurance, hospital bills, OOP costs',
     icon: 'medical_services',
-    color: 'blue',
+    color: 'medical',
     items: [], // Populated from calculator
   },
   {
@@ -57,11 +57,11 @@ export const DEFAULT_BUDGET_CATEGORIES: BudgetCategory[] = [
 
 // Color classes for Tailwind
 export const CATEGORY_COLOR_CLASSES: Record<string, { bg: string; text: string; progress: string; border: string }> = {
-  blue: {
-    bg: 'bg-blue-500/10',
-    text: 'text-blue-400',
-    progress: 'bg-blue-500',
-    border: 'border-blue-500/30',
+  medical: {
+    bg: 'bg-medical/10',
+    text: 'text-medical',
+    progress: 'bg-medical',
+    border: 'border-medical/30',
   },
   purple: {
     bg: 'bg-purple-500/10',

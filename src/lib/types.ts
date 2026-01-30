@@ -71,7 +71,7 @@ export interface BudgetItem {
   note?: string
 }
 
-export type CategoryColor = 'blue' | 'purple' | 'teal' | 'orange' | 'green' | 'gray' | 'pink'
+export type CategoryColor = 'medical' | 'purple' | 'teal' | 'orange' | 'green' | 'gray' | 'pink'
 
 // Insurance plan for comparison feature
 export interface InsurancePlan {

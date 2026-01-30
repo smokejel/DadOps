@@ -11,14 +11,14 @@ export default function Hero() {
           {/* Left Content */}
           <div className="max-w-2xl text-left">
             {/* Status Badge */}
-            <div className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-500 ring-1 ring-inset ring-emerald-500/20 mb-6">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
+            <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20 mb-6">
+              <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse" />
               System Operational
             </div>
 
             <h1 className="text-4xl font-black tracking-tight text-white sm:text-6xl mb-6 leading-[1.1]">
               Mission Control for{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-emerald-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">
                 First-Time Dads
               </span>
             </h1>
@@ -31,7 +31,7 @@ export default function Hero() {
             <div className="flex items-center gap-x-6">
               <Link
                 href="/onboarding"
-                className="h-12 rounded-lg bg-emerald-500 px-8 text-base font-bold text-gray-900 shadow-lg shadow-emerald-500/25 hover:bg-emerald-600 hover:text-white transition-all inline-flex items-center justify-center"
+                className="h-12 rounded-lg bg-primary px-8 text-base font-bold text-gray-900 shadow-lg shadow-primary/25 hover:bg-primary-dark hover:text-white transition-all inline-flex items-center justify-center"
               >
                 Get Started
               </Link>
@@ -42,7 +42,7 @@ export default function Hero() {
           <div className="relative lg:h-auto h-64 w-full">
             <div className="relative rounded-xl border border-gray-800 bg-gray-800/50 backdrop-blur-xl p-4 shadow-2xl">
               {/* Accent line */}
-              <div className="absolute -top-px left-4 h-px w-20 bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-50" />
+              <div className="absolute -top-px left-4 h-px w-20 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
 
               {/* Window controls */}
               <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
@@ -63,18 +63,18 @@ export default function Hero() {
                   </div>
                   <div className="flex-1 rounded bg-gray-900 p-4 border border-gray-800">
                     <div className="text-xs text-gray-500 mb-1">BUDGET STATUS</div>
-                    <div className="text-2xl font-bold text-emerald-500 font-mono">ON TRACK</div>
+                    <div className="text-2xl font-bold text-primary font-mono">ON TRACK</div>
                   </div>
                 </div>
 
                 {/* Chart Preview */}
                 <div className="h-40 w-full rounded bg-gray-900 border border-gray-800 relative overflow-hidden flex items-end justify-between px-4 pb-2 pt-8 gap-2">
-                  <div className="w-full bg-gray-800/50 h-[30%] rounded-sm hover:bg-emerald-500/50 transition-colors" />
-                  <div className="w-full bg-gray-800/50 h-[50%] rounded-sm hover:bg-emerald-500/50 transition-colors" />
-                  <div className="w-full bg-gray-800/50 h-[40%] rounded-sm hover:bg-emerald-500/50 transition-colors" />
-                  <div className="w-full bg-emerald-500 h-[75%] rounded-sm shadow-[0_0_15px_rgba(16,185,129,0.3)]" />
-                  <div className="w-full bg-gray-800/50 h-[60%] rounded-sm hover:bg-emerald-500/50 transition-colors" />
-                  <div className="absolute top-2 right-4 text-xs font-mono text-emerald-500">
+                  <div className="w-full bg-gray-800/50 h-[30%] rounded-sm hover:bg-primary/50 transition-colors" />
+                  <div className="w-full bg-gray-800/50 h-[50%] rounded-sm hover:bg-primary/50 transition-colors" />
+                  <div className="w-full bg-gray-800/50 h-[40%] rounded-sm hover:bg-primary/50 transition-colors" />
+                  <div className="w-full bg-primary h-[75%] rounded-sm shadow-[0_0_15px_rgba(255,85,0,0.3)]" />
+                  <div className="w-full bg-gray-800/50 h-[60%] rounded-sm hover:bg-primary/50 transition-colors" />
+                  <div className="absolute top-2 right-4 text-xs font-mono text-primary">
                     SPENDING VELOCITY
                   </div>
                 </div>
@@ -84,7 +84,7 @@ export default function Hero() {
             {/* Floating Task Complete Card */}
             <div className="absolute -right-4 -bottom-6 rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-xl max-w-[200px] hidden sm:block">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-full bg-green-900/30 text-emerald-500">
+                <div className="flex size-10 items-center justify-center rounded-full bg-green-900/30 text-primary">
                   <span className="material-symbols-outlined">check_circle</span>
                 </div>
                 <div>

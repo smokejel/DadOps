@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useDashboardState } from '@/hooks/useDashboardState'
 import Sidebar from '@/components/dashboard/Sidebar'
 import MobileNav from '@/components/dashboard/MobileNav'
+import { LoadingSpinner } from '@/components/ui'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -17,14 +18,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [isLoaded, isOnboarded, router])
 
   if (!isLoaded) {
-    return (
-      <div className="min-h-screen bg-background-dark flex items-center justify-center">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          <span className="text-gray-400">Loading mission data...</span>
-        </div>
-      </div>
-    )
+    return <LoadingSpinner showLogo message="Loading mission data..." />
   }
 
   if (!isOnboarded) {

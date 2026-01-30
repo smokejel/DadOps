@@ -36,7 +36,7 @@ export default function RealityCheck() {
               className="rounded-2xl bg-gray-800/50 border border-gray-700 p-8 relative overflow-hidden"
             >
               {/* Quote mark decoration */}
-              <div className="absolute top-4 left-4 text-6xl text-emerald-500/10 font-serif leading-none">
+              <div className="absolute top-4 left-4 text-6xl text-primary/10 font-serif leading-none">
                 &ldquo;
               </div>
 
@@ -46,7 +46,7 @@ export default function RealityCheck() {
                 </p>
                 <footer className="text-sm">
                   <span className="text-gray-500">— {quote.source}</span>
-                  <span className="text-emerald-500 ml-2">({quote.subreddit})</span>
+                  <span className="text-primary ml-2">({quote.subreddit})</span>
                 </footer>
               </blockquote>
             </div>

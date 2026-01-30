@@ -10,6 +10,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "DadOps | Mission Control",
   description: "Your command center for navigating the journey to fatherhood",
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+  },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({

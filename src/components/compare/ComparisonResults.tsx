@@ -197,7 +197,7 @@ export default function ComparisonResults({
       </div>
 
       {/* Recommended Plan Card */}
-      <div className="bg-gradient-to-r from-primary/20 to-emerald-600/20 rounded-xl p-6 border border-primary/30">
+      <div className="bg-gradient-to-r from-primary/20 to-primary-dark/20 rounded-xl p-6 border border-primary/30">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
             <span className="material-symbols-outlined text-primary text-2xl">recommend</span>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- DadOps Favicon - optimized for small size -->
+  
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#111827"/>
+  
+  <!-- Simplified D with accent -->
+  <path d="M6 7 L6 25 L14 25 C20 25 24 21 24 16 C24 11 20 7 14 7 L6 7 Z M10 11 L13 11 C17 11 20 13 20 16 C20 19 17 21 13 21 L10 21 L10 11 Z" fill="#F5F5F5"/>
+  
+  <!-- Single accent line -->
+  <path d="M22 9 L28 9" stroke="#FF5500" stroke-width="3" stroke-linecap="round"/>
+</svg>
