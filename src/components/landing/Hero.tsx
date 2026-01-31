@@ -17,15 +17,16 @@ export default function Hero() {
             </div>
 
             <h1 className="text-4xl font-black tracking-tight text-white sm:text-6xl mb-6 leading-[1.1]">
-              Mission Control for{' '}
+              The Playbook{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">
-                First-Time Dads
-              </span>
+                Experienced Dads
+              </span>{' '}
+              Wish They Had.
             </h1>
 
-            <p className="text-lg leading-8 text-gray-400 mb-8 max-w-xl">
-              Track costs, manage the budget, and execute baby prep tasks with military precision.
-              Eliminate the chaos and prepare for deployment today.
+            <p className="text-lg leading-8 text-gray-300 mb-8 max-w-xl">
+              Most first-time dads discover the double-deductible trap too late. Get ahead of it
+              with a battle plan that shows exactly what you&apos;ll owe—and how to be ready.
             </p>
 
             <div className="flex items-center gap-x-6">
@@ -51,18 +52,18 @@ export default function Hero() {
                   <div className="size-3 rounded-full bg-yellow-500" />
                   <div className="size-3 rounded-full bg-green-500" />
                 </div>
-                <div className="text-xs text-gray-500 font-mono">DADOPS_TERMINAL_V1.0</div>
+                <div className="text-xs text-gray-400 font-mono">DADOPS_TERMINAL_V1.0</div>
               </div>
 
               {/* Stats */}
               <div className="space-y-4">
                 <div className="flex gap-4">
                   <div className="flex-1 rounded bg-gray-900 p-4 border border-gray-800">
-                    <div className="text-xs text-gray-500 mb-1">RUNWAY REMAINING</div>
+                    <div className="text-xs text-gray-400 mb-1">RUNWAY REMAINING</div>
                     <div className="text-2xl font-bold text-white font-mono">14 WEEKS</div>
                   </div>
                   <div className="flex-1 rounded bg-gray-900 p-4 border border-gray-800">
-                    <div className="text-xs text-gray-500 mb-1">BUDGET STATUS</div>
+                    <div className="text-xs text-gray-400 mb-1">BUDGET STATUS</div>
                     <div className="text-2xl font-bold text-primary font-mono">ON TRACK</div>
                   </div>
                 </div>
@@ -88,7 +89,7 @@ export default function Hero() {
                   <span className="material-symbols-outlined">check_circle</span>
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400">Task Complete</div>
+                  <div className="text-xs text-gray-300">Task Complete</div>
                   <div className="text-sm font-bold text-white">Crib Assembled</div>
                 </div>
               </div>

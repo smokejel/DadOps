@@ -32,10 +32,10 @@ export default function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <p className={`font-medium ${task.completed ? 'text-gray-500 line-through' : 'text-white'}`}>
+        <p className={`font-medium ${task.completed ? 'text-gray-400 line-through' : 'text-white'}`}>
           {task.title}
         </p>
-        <p className={`text-sm mt-1 ${task.completed ? 'text-gray-600' : 'text-gray-400'}`}>
+        <p className={`text-sm mt-1 ${task.completed ? 'text-gray-500' : 'text-gray-300'}`}>
           {task.description}
         </p>
         {task.isHighStakes && task.consequence && !task.completed && (

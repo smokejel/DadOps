@@ -32,7 +32,7 @@ export default function UpcomingTasks({ tasks, onToggleTask }: UpcomingTasksProp
       </div>
 
       {upcomingTasks.length === 0 ? (
-        <p className="text-gray-400 text-center py-8">
+        <p className="text-gray-300 text-center py-8">
           All tasks complete! Great job, Dad!
         </p>
       ) : (
@@ -71,7 +71,7 @@ export default function UpcomingTasks({ tasks, onToggleTask }: UpcomingTasksProp
                   <span className={`px-2 py-1 rounded text-xs font-medium ${style.bg} ${style.text}`}>
                     {task.category}
                   </span>
-                  <span className="text-xs text-gray-500 whitespace-nowrap">
+                  <span className="text-xs text-gray-400 whitespace-nowrap">
                     Week {task.weekDue}
                   </span>
                 </div>

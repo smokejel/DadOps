@@ -67,7 +67,7 @@ export default function CategoryCard({
           </div>
           <div className="text-left">
             <h3 className="text-white font-semibold">{category.name}</h3>
-            <p className="text-gray-500 text-sm">{category.description}</p>
+            <p className="text-gray-400 text-sm">{category.description}</p>
           </div>
         </div>
 

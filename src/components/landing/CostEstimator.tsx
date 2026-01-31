@@ -39,7 +39,7 @@ export default function CostEstimator() {
           <div className="lg:col-span-3 space-y-10">
             <div>
               <h2 className="text-2xl font-bold text-white mb-2">Quick Deployment Estimate</h2>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-300 text-sm">
                 Adjust sliders to simulate your first-year financial impact.
               </p>
             </div>
@@ -61,7 +61,7 @@ export default function CostEstimator() {
                 onChange={(e) => setDeductible(Number(e.target.value))}
                 className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb"
               />
-              <div className="flex justify-between text-xs text-gray-500 font-mono">
+              <div className="flex justify-between text-xs text-gray-400 font-mono">
                 <span>$0</span>
                 <span>$10k</span>
               </div>
@@ -84,7 +84,7 @@ export default function CostEstimator() {
                 onChange={(e) => setOopMax(Number(e.target.value))}
                 className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb"
               />
-              <div className="flex justify-between text-xs text-gray-500 font-mono">
+              <div className="flex justify-between text-xs text-gray-400 font-mono">
                 <span>$0</span>
                 <span>$15k</span>
               </div>
@@ -107,7 +107,7 @@ export default function CostEstimator() {
                 onChange={(e) => setGearBudget(Number(e.target.value))}
                 className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb"
               />
-              <div className="flex justify-between text-xs text-gray-500 font-mono">
+              <div className="flex justify-between text-xs text-gray-400 font-mono">
                 <span>$500</span>
                 <span>$5k</span>
               </div>
@@ -122,7 +122,7 @@ export default function CostEstimator() {
                 <span className="material-symbols-outlined text-[120px] text-white">payments</span>
               </div>
 
-              <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wider mb-2">
+              <h3 className="text-gray-300 text-sm font-medium uppercase tracking-wider mb-2">
                 Total Estimated 1st Year Cost
               </h3>
               <div className="text-5xl font-black text-white font-mono tracking-tight mb-6">
@@ -131,24 +131,31 @@ export default function CostEstimator() {
 
               <div className="space-y-3 pt-6 border-t border-gray-800">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Medical (Est)</span>
+                  <span className="text-gray-300">Medical (Est)</span>
                   <span className="text-white font-mono">{formatCurrency(medicalEstimate)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Gear & Supplies</span>
+                  <span className="text-gray-300">Gear & Supplies</span>
                   <span className="text-white font-mono">{formatCurrency(gearBudget)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Diapers & Formula</span>
+                  <span className="text-gray-300">Diapers & Formula</span>
                   <span className="text-white font-mono">{formatCurrency(diapersFormula)}</span>
                 </div>
               </div>
 
+              {/* Urgency Message */}
+              <div className="mt-6 p-3 rounded-lg bg-primary/10 border border-primary/20">
+                <p className="text-sm text-primary font-medium text-center">
+                  You have ~20 weeks to build your War Chest.
+                </p>
+              </div>
+
               <Link
                 href="/onboarding"
-                className="mt-8 w-full rounded-lg bg-white/5 py-3 text-sm font-bold text-white hover:bg-white/10 border border-white/10 transition-colors flex items-center justify-center"
+                className="mt-6 w-full rounded-lg bg-primary py-3 text-sm font-bold text-gray-900 hover:bg-primary-dark hover:text-white transition-colors flex items-center justify-center"
               >
-                Get Detailed Breakdown
+                Build Your Battle Plan
               </Link>
             </div>
           </div>

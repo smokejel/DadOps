@@ -31,20 +31,20 @@ export default function CountdownCard({ userData, tasks }: CountdownCardProps) {
         ) : (
           <>
             {countdown.weeks} Weeks, {countdown.days} Days{' '}
-            <span className="text-gray-400 font-normal">until Deployment</span>
+            <span className="text-gray-300 font-normal">until Deployment</span>
           </>
         )}
       </h2>
 
       {/* Target Date */}
-      <p className="text-gray-400 mb-6">
+      <p className="text-gray-300 mb-6">
         Target Date: {formatDueDate(userData.dueDate)}
       </p>
 
       {/* Readiness Progress */}
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
-          <span className="text-gray-400">Readiness Level</span>
+          <span className="text-gray-300">Readiness Level</span>
           <span className="text-primary font-medium">{readinessPercent}%</span>
         </div>
         <div className="h-2 bg-gray-700 rounded-full overflow-hidden">

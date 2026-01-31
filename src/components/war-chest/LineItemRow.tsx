@@ -54,7 +54,7 @@ export default function LineItemRow({
           {item.name}
         </span>
         {item.note && (
-          <p className="text-xs text-gray-500 mt-0.5">{item.note}</p>
+          <p className="text-xs text-gray-400 mt-0.5">{item.note}</p>
         )}
       </td>
 

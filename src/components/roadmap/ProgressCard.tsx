@@ -21,7 +21,7 @@ export default function ProgressCard({ tasks }: ProgressCardProps) {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-white mb-1">Total Progress</h3>
-          <p className="text-gray-400 text-sm mb-4">
+          <p className="text-gray-300 text-sm mb-4">
             You&apos;re crushing it, Dad. Keep the momentum going.
           </p>
 
@@ -34,11 +34,11 @@ export default function ProgressCard({ tasks }: ProgressCardProps) {
               />
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-400">
+              <span className="text-gray-300">
                 {completedCount} of {totalCount} tasks complete
               </span>
               {nextTask && (
-                <span className="text-gray-500">
+                <span className="text-gray-400">
                   Next milestone: {nextTask.title}
                 </span>
               )}

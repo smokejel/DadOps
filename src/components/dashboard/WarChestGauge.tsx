@@ -42,13 +42,13 @@ export default function WarChestGauge({ costs, cashOnHand, onUpdateCash }: WarCh
       <div className="space-y-6">
         {/* Total Liability */}
         <div className="flex justify-between items-center">
-          <span className="text-gray-400">Total Liability</span>
+          <span className="text-gray-300">Total Liability</span>
           <span className="text-white font-semibold">{formatCurrency(costs.effectiveCost)}</span>
         </div>
 
         {/* Cash on Hand */}
         <div className="flex justify-between items-center">
-          <span className="text-gray-400">Cash on Hand</span>
+          <span className="text-gray-300">Cash on Hand</span>
           {isEditing ? (
             <div className="flex flex-col items-end gap-1">
               <div className="flex items-center gap-2">
@@ -110,7 +110,7 @@ export default function WarChestGauge({ costs, cashOnHand, onUpdateCash }: WarCh
             />
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">{Math.round(progressPercent)}% funded</span>
+            <span className="text-gray-400">{Math.round(progressPercent)}% funded</span>
           </div>
         </div>
 

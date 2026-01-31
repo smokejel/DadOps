@@ -119,11 +119,11 @@ export default function MissionIntelligence({ userData }: MissionIntelligencePro
               {/* Content */}
               <div className="flex-1 -mt-0.5">
                 <p className={`font-medium ${
-                  event.isCurrent ? 'text-primary' : event.isPast ? 'text-gray-500' : 'text-white'
+                  event.isCurrent ? 'text-primary' : event.isPast ? 'text-gray-400' : 'text-white'
                 }`}>
                   {event.label}
                 </p>
-                <p className="text-sm text-gray-500">{event.date}</p>
+                <p className="text-sm text-gray-400">{event.date}</p>
               </div>
             </div>
           ))}

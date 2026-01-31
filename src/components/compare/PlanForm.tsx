@@ -64,9 +64,9 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm text-gray-400 mb-1">Monthly Premium</label>
+          <label className="block text-sm text-gray-300 mb-1">Monthly Premium</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
             <input
               type="text"
               inputMode="numeric"
@@ -82,9 +82,9 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
         </div>
 
         <div>
-          <label className="block text-sm text-gray-400 mb-1">Family Deductible</label>
+          <label className="block text-sm text-gray-300 mb-1">Family Deductible</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
             <input
               type="text"
               inputMode="numeric"
@@ -100,9 +100,9 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
         </div>
 
         <div>
-          <label className="block text-sm text-gray-400 mb-1">Family Out-of-Pocket Max</label>
+          <label className="block text-sm text-gray-300 mb-1">Family Out-of-Pocket Max</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
             <input
               type="text"
               inputMode="numeric"
@@ -118,9 +118,9 @@ export default function PlanForm({ plan, onChange, isPrimary, onRemove }: PlanFo
         </div>
 
         <div>
-          <label className="block text-sm text-gray-400 mb-1">Employer HSA/HRA Contribution</label>
+          <label className="block text-sm text-gray-300 mb-1">Employer HSA/HRA Contribution</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
             <input
               type="text"
               inputMode="numeric"

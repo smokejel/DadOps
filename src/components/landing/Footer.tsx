@@ -11,7 +11,7 @@ export default function Footer() {
         <Logo variant="full" size="sm" />
 
         {/* Links */}
-        <div className="flex gap-8 text-sm text-gray-400">
+        <div className="flex gap-8 text-sm text-gray-300">
           <Link href="#" className="hover:text-white transition-colors">
             Privacy
           </Link>
@@ -21,10 +21,13 @@ export default function Footer() {
           <Link href="#" className="hover:text-white transition-colors">
             Support
           </Link>
+          <a href="mailto:admin@dadops.one" className="hover:text-white transition-colors">
+            Something broken? Let me know
+          </a>
         </div>
 
         {/* Copyright */}
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-500">
           © {currentYear} DadOps Inc. All rights reserved.
         </div>
       </div>

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Task } from '@/lib/types'
 import TaskRow from './TaskRow'
 
@@ -38,6 +39,9 @@ export default function TrimesterSection({
     (trimester === 2 && currentWeek > 12 && currentWeek <= 26) ||
     (trimester === 3 && currentWeek > 26)
 
+  // Default expanded: current trimester expanded, others collapsed
+  const [isExpanded, setIsExpanded] = useState(isCurrentTrimester)
+
   // Status badge
   let statusBadge: { text: string; className: string } | null = null
   if (allCompleted) {
@@ -54,14 +58,19 @@ export default function TrimesterSection({
         ? 'border-l-4 border-l-primary border-gray-800'
         : 'border-gray-800'
     }`}>
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-800">
+      {/* Header - Clickable to expand/collapse */}
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className={`w-full flex items-center justify-between p-4 hover:bg-gray-800/50 transition-colors ${
+          isExpanded ? 'border-b border-gray-800' : ''
+        }`}
+      >
         <div className="flex items-center gap-3">
           {allCompleted && (
             <span className="material-symbols-outlined text-primary text-xl">check_circle</span>
           )}
-          <h3 className="text-lg font-semibold text-white">
-            {info.label} <span className="text-gray-400 font-normal">({info.weeks})</span>
+          <h3 className="text-lg font-semibold text-white text-left">
+            {info.label} <span className="text-gray-300 font-normal">({info.weeks})</span>
           </h3>
         </div>
         <div className="flex items-center gap-3">
@@ -71,25 +80,32 @@ export default function TrimesterSection({
             </span>
           )}
           {isCurrentTrimester && !allCompleted && (
-            <span className="text-sm text-gray-400">Week {currentWeek}</span>
+            <span className="text-sm text-gray-300">Week {currentWeek}</span>
+          )}
+          <span className={`material-symbols-outlined text-gray-400 transition-transform ${
+            isExpanded ? 'rotate-180' : ''
+          }`}>
+            expand_more
+          </span>
+        </div>
+      </button>
+
+      {/* Tasks - Only shown when expanded */}
+      {isExpanded && (
+        <div className="p-4 space-y-3">
+          {trimesterTasks.map(task => (
+            <TaskRow
+              key={task.id}
+              task={task}
+              onToggle={onToggleTask}
+              onDelete={task.userAdded ? onDeleteTask : undefined}
+            />
+          ))}
+          {trimesterTasks.length === 0 && (
+            <p className="text-gray-400 text-center py-4">No tasks for this trimester</p>
           )}
         </div>
-      </div>
-
-      {/* Tasks */}
-      <div className="p-4 space-y-3">
-        {trimesterTasks.map(task => (
-          <TaskRow
-            key={task.id}
-            task={task}
-            onToggle={onToggleTask}
-            onDelete={task.userAdded ? onDeleteTask : undefined}
-          />
-        ))}
-        {trimesterTasks.length === 0 && (
-          <p className="text-gray-500 text-center py-4">No tasks for this trimester</p>
-        )}
-      </div>
+      )}
     </div>
   )
 }

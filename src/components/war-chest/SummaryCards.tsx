@@ -23,7 +23,7 @@ export default function SummaryCards({ budget }: SummaryCardsProps) {
       {/* Total Budget */}
       <div className="bg-card-dark rounded-xl p-5 border border-gray-800">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-gray-400 text-sm uppercase tracking-wide">Total Budget</span>
+          <span className="text-gray-300 text-sm uppercase tracking-wide">Total Budget</span>
           <div className="w-10 h-10 rounded-lg bg-gray-700 flex items-center justify-center">
             <span className="material-symbols-outlined text-gray-400">account_balance_wallet</span>
           </div>
@@ -39,7 +39,7 @@ export default function SummaryCards({ budget }: SummaryCardsProps) {
       {/* Total Spent */}
       <div className="bg-card-dark rounded-xl p-5 border border-gray-800">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-gray-400 text-sm uppercase tracking-wide">Total Spent</span>
+          <span className="text-gray-300 text-sm uppercase tracking-wide">Total Spent</span>
           <div className="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center">
             <span className="material-symbols-outlined text-teal-400">shopping_cart</span>
           </div>
@@ -59,7 +59,7 @@ export default function SummaryCards({ budget }: SummaryCardsProps) {
       {/* Remaining */}
       <div className="bg-card-dark rounded-xl p-5 border border-gray-800">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-gray-400 text-sm uppercase tracking-wide">Remaining</span>
+          <span className="text-gray-300 text-sm uppercase tracking-wide">Remaining</span>
           <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
             <span className="material-symbols-outlined text-primary">savings</span>
           </div>

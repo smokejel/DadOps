@@ -34,35 +34,35 @@ export default function ComparisonResults({
         <div className="bg-card-dark rounded-xl p-5 border border-gray-800">
           <div className="flex items-center gap-2 mb-3">
             <span className="material-symbols-outlined text-blue-400">target</span>
-            <span className="text-gray-400 text-sm">Your Target</span>
+            <span className="text-gray-300 text-sm">Your Target</span>
           </div>
           <p className="text-2xl font-bold text-white">
             {formatCurrency(recommended.effectiveCost)}
           </p>
-          <p className="text-sm text-gray-500 mt-1">Lowest effective cost</p>
+          <p className="text-sm text-gray-400 mt-1">Lowest effective cost</p>
         </div>
 
         <div className="bg-card-dark rounded-xl p-5 border border-gray-800">
           <div className="flex items-center gap-2 mb-3">
             <span className="material-symbols-outlined text-primary">savings</span>
-            <span className="text-gray-400 text-sm">Monthly Goal</span>
+            <span className="text-gray-300 text-sm">Monthly Goal</span>
           </div>
           <p className="text-2xl font-bold text-white">
             {formatCurrency(Math.ceil(recommended.effectiveCost / monthsRemaining))}
             <span className="text-base font-normal text-gray-400">/mo</span>
           </p>
-          <p className="text-sm text-gray-500 mt-1">To be ready by target date</p>
+          <p className="text-sm text-gray-400 mt-1">To be ready by target date</p>
         </div>
 
         <div className="bg-card-dark rounded-xl p-5 border border-gray-800">
           <div className="flex items-center gap-2 mb-3">
             <span className="material-symbols-outlined text-purple-400">schedule</span>
-            <span className="text-gray-400 text-sm">Timeline</span>
+            <span className="text-gray-300 text-sm">Timeline</span>
           </div>
           <p className="text-2xl font-bold text-white">
             {monthsRemaining} Months
           </p>
-          <p className="text-sm text-gray-500 mt-1">Remaining to save</p>
+          <p className="text-sm text-gray-400 mt-1">Remaining to save</p>
         </div>
       </div>
 
@@ -142,12 +142,12 @@ export default function ComparisonResults({
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-gray-700">
-                <th className="pb-3 text-gray-400 font-medium">Plan</th>
-                <th className="pb-3 text-gray-400 font-medium text-right">Annual Premium</th>
-                <th className="pb-3 text-gray-400 font-medium text-right">Expected OOP</th>
-                <th className="pb-3 text-gray-400 font-medium text-right">HSA Offset</th>
-                <th className="pb-3 text-gray-400 font-medium text-right">Effective Cost</th>
-                <th className="pb-3 text-gray-400 font-medium text-right"></th>
+                <th className="pb-3 text-gray-300 font-medium">Plan</th>
+                <th className="pb-3 text-gray-300 font-medium text-right">Annual Premium</th>
+                <th className="pb-3 text-gray-300 font-medium text-right">Expected OOP</th>
+                <th className="pb-3 text-gray-300 font-medium text-right">HSA Offset</th>
+                <th className="pb-3 text-gray-300 font-medium text-right">Effective Cost</th>
+                <th className="pb-3 text-gray-300 font-medium text-right"></th>
               </tr>
             </thead>
             <tbody>
@@ -206,7 +206,7 @@ export default function ComparisonResults({
             <h3 className="text-lg font-semibold text-white mb-1">
               Recommended: {recommended.plan.nickname}
             </h3>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-gray-300 text-sm mb-4">
               This plan has the lowest effective cost at {formatCurrency(recommended.effectiveCost)}.
               {comparisons.length > 1 && (
                 <> You&apos;ll save up to{' '}
